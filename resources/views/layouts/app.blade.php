@@ -123,7 +123,7 @@
                         <li class="nav-item {{ Request::is('video') ? 'fw-bold' : '' }} h5 mx-1">
                             <a class="nav-link text-white" href="{{ route('video.index') }}">Video</a>
                         </li>
-                        <li class="nav-item h5 mx-1">
+                        <li class="nav-item h5 mx-1 {{ Request::is('about') ? 'fw-bold' : '' }}">
                             <a class="nav-link text-white" href="{{ url('/about') }}">About</a>
                         </li>
                         <!-- Add more menu items here as needed -->
@@ -184,7 +184,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 text-white">
             @yield('content')
         </main>
 
