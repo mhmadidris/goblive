@@ -167,6 +167,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" style="background-color: #353839;"
                                     aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item text-white" href="{{ route('mychannel.index') }}">
+                                        {{ __('My Channel') }}
+                                    </a>
+
+
                                     <a class="dropdown-item text-white" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">

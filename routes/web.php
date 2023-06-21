@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ChannelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Http\Controllers\VideoController;
 |
 */
 
+Auth::routes();
+
 Route::resource('/', HomeController::class);
 
 Route::resource('/video', VideoController::class);
@@ -23,4 +26,8 @@ Route::get('/about', function () {
     return view('pages.front.about');
 });
 
-Auth::routes();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::name('mychannel.')->prefix('mychannel')->group(function () {
+        Route::resource('/', ChannelController::class);
+    });
+});

@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('channel_id');
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             $table->string('title');
-            $table->longBlob('video');
+            $table->longText('video');
             $table->string('url');
             $table->string('thumbnail');
             $table->string('duration');
