@@ -29,5 +29,9 @@ Route::get('/about', function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::name('mychannel.')->prefix('mychannel')->group(function () {
         Route::resource('/', ChannelController::class);
+
+        Route::get('detail', function () {
+            return view('pages.front.detail-video');
+        });
     });
 });

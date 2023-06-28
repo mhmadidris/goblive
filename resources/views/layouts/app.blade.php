@@ -189,7 +189,7 @@
             </div>
         </nav>
 
-        <main class="py-4 text-white">
+        <main class="text-white">
             @yield('content')
         </main>
 
