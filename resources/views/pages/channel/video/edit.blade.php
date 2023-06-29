@@ -13,7 +13,7 @@
 
             <div class="d-flex flex-column gap-3">
                 <div class="card card-body text-black" style="background-color: #a8b8d0;">
-                    <h3 class="fw-bold mb-4">Upload Video</h3>
+                    <h3 class="fw-bold mb-4">Edit Video</h3>
                     <div class="mb-3 d-flex justify-content-center align-items-center">
                         <img id="defaultImage" class="rounded"
                             src="https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"

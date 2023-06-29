@@ -25,6 +25,10 @@
             background: rgb(65, 65, 73);
             background: radial-gradient(circle, rgba(65, 65, 73, 1) 0%, rgba(57, 57, 57, 1) 100%);
         }
+
+        /* .bg-modal {
+                                                                                                                                                                            background: linear-gradient(60deg, #29323c 0%, #485563 100%);
+                                                                                                                                                                        } */
     </style>
 
     <header>
@@ -47,9 +51,10 @@
                     <i class="fas fa-plus"></i>
                     <span>Upload new video</span>
                 </a>
-                <a href="#" class="btn text-white" style="background-color: #353839;">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#editProfile" class="btn text-white"
+                    style="background-color: #353839;">
                     <i class="fas fa-edit"></i>
-                </a>
+                </button>
             </div>
         </div>
         <hr class="hr" />
@@ -187,6 +192,77 @@
             </div>
         </div>
     </header>
-    <div class="container d-flex flex-column gap-4">
+
+    <!-- Modal Edir Profile -->
+    <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editProfileLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content bg-modal text-black">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div id="headerPreview">
+                            <img class="rounded w-100"
+                                src="https://images.unsplash.com/photo-1495277493816-4c359911b7f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=865&q=80"
+                                style="height: 10rem; object-fit: cover;">
+                        </div>
+                        <label for="header" class="form-label">Header</label>
+                        <input type="file" class="form-control" id="header" name="header" accept="image/*"
+                            onchange="previewHeader(event)">
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="text-center" id="avatarPreview">
+                            <img class="rounded-circle"
+                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                                style="width: 10rem; height: 10rem; object-fit: cover;">
+                        </div>
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*"
+                            onchange="previewAvatar(event)">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama</label>
+                        <input type="email" class="form-control" id="name" name="name"
+                            placeholder="cth: John Smith">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bioForm" class="form-label">Bio</label>
+                        <textarea class="form-control" id="bioForm" rows="4" style="resize: none;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function previewAvatar(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('avatarPreview');
+                output.innerHTML = '<img class="rounded-circle" src="' + reader.result +
+                    '" style="width: 10rem; height: 10rem; object-fit: cover;">';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function previewHeader(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('headerPreview');
+                output.innerHTML = '<img class="rounded-circle" src="' + reader.result +
+                    '" style="width: 10rem; height: 10rem; object-fit: cover;">';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 @endsection
