@@ -20,7 +20,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.channel.video.add');
     }
 
     /**

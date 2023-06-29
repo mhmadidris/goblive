@@ -42,8 +42,8 @@
                 </div>
             </div>
             <div class="d-flex flex-row gap-2">
-                <a href="" class="btn d-flex flex-row align-items-center gap-2 text-white"
-                    style="background-color: #353839;">
+                <a href="{{ route('mychannel.video.create') }}"
+                    class="btn d-flex flex-row align-items-center gap-2 text-white" style="background-color: #353839;">
                     <i class="fas fa-plus"></i>
                     <span>Upload new video</span>
                 </a>
