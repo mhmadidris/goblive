@@ -34,9 +34,9 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Video $video)
+    public function show($id)
     {
-        //
+        return view('pages.front.detail-video');
     }
 
     /**

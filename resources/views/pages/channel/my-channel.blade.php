@@ -77,7 +77,7 @@
                             <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
                                 alt="Thumbnail" class="rounded" style="width: 100%;">
                         </div>
-                        <a href="/dashboard/detail" class="nav-link">
+                        <a href="{{ route('mychannel.video.show', 1) }}" class="nav-link">
                             <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
                         </a>
                         <div class="d-flex align-items-center gap-2">
