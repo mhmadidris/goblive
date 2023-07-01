@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
+use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChannelController extends Controller
 {
@@ -12,7 +14,10 @@ class ChannelController extends Controller
      */
     public function index()
     {
-        return view('pages.channel.my-channel');
+        $myChannelId = Channel::where('user_id', Auth::user()->id)->value('id');
+        $myVideo = Video::where('channel_id', $myChannelId)->get();
+
+        return view('pages.channel.my-channel')->with('videos', $myVideo);
     }
 
     /**
@@ -36,6 +41,7 @@ class ChannelController extends Controller
      */
     public function show(Channel $channel)
     {
+        dd("asas");
     }
 
     /**

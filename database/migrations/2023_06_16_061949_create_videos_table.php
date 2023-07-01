@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('title');
             $table->longText('video');
             $table->string('url');
-            $table->string('thumbnail');
+            $table->longText('thumbnail');
             $table->string('duration');
+            $table->string('format');
             $table->unsignedBigInteger('views')->default(0);
             $table->unsignedBigInteger('likes')->default(0);
             $table->unsignedBigInteger('dislikes')->default(0);
             $table->string('category');
+            $table->string('description');
+            $table->enum('visibility', ['Public', 'Private']);
             $table->timestamps();
         });
     }

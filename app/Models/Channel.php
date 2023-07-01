@@ -10,6 +10,8 @@ class Channel extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * Generate a unique username for the channel.
      *
@@ -31,5 +33,8 @@ class Channel extends Model
         return $username;
     }
 
-    public $guarded = [];
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class, 'subscriptions', 'channel_id', 'user_id');
+    }
 }

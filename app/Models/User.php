@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Channel::class, 'subscriptions', 'user_id', 'channel_id');
+    }
 }

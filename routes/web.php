@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\ChannelController;
 
 Auth::routes();
 
+Route::post('subscribe/{channel}', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+Route::post('unsubscribe/{channel}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
+
 Route::resource('/', HomeController::class);
 
 Route::resource('/video', VideoController::class);
@@ -31,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::resource('/', ChannelController::class);
 
         Route::resource('video', VideoController::class);
+        Route::get('/video/{url}', [VideoController::class, 'show'])->name('video.show');
 
         Route::get('detail', function () {
             return view('pages.front.detail-video');

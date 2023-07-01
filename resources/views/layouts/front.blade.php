@@ -45,7 +45,7 @@
     </main>
 
     <script>
-        $('.owl-carousel').owlCarousel({
+        $('#owl-video').owlCarousel({
             loop: false,
             margin: 15,
             nav: false,
@@ -61,6 +61,14 @@
                     items: 4
                 }
             }
+        });
+
+        $('#owl-share').owlCarousel({
+            loop: false,
+            margin: 10,
+            nav: false,
+            dots: false,
+            items: 8,
         });
     </script>
 </body>
