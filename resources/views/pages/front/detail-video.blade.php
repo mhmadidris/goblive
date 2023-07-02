@@ -42,13 +42,15 @@
                                 <span>{{ $video->category }}</span>
                             </div>
                         </div>
-                        <div>
-                            <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
-                                data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="fas fa-share"></i>
-                                Share
-                            </button>
-                        </div>
+                        @if (Auth::user() && $video->user_id != Auth::user()->id)
+                            <div>
+                                <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="fas fa-share"></i>
+                                    Share
+                                </button>
+                            </div>
+                        @endif
                     </div>
                     <hr>
                     <div class="d-flex flex-column gap-3">
@@ -58,12 +60,16 @@
                                     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
                                     alt="avatar">
                                 <div class="d-flex flex-column">
-                                    <h5 class="fw-bold">Pewdiepie</h5>
+                                    <h5 class="fw-bold">{{ $video->name }}</h5>
                                     <p class="fw-medium p-0 m-0">123 Subscribers</p>
                                 </div>
                             </div>
                             <div>
-                                <button type="button" class="btn btn-sm btn-primary">Subscribe</button>
+                                @if (Auth::user() && $video->user_id != Auth::user()->id)
+                                    <button type="button" class="btn btn-sm btn-primary">Subscribe</button>
+                                @elseif (Auth::user() && $video->user_id == Auth::user()->id)
+                                    <a href="" class="btn btn-sm btn-primary">Edit Video</a>
+                                @endif
                             </div>
                         </div>
 
@@ -84,105 +90,29 @@
                 </div>
             </div>
 
-            <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
-            <div id="owl-video" class="owl-carousel owl-theme">
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+            @if (Auth::user() && $video->user_id != Auth::user()->id)
+                <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
+                <div id="owl-video" class="owl-carousel owl-theme">
+                    @foreach ($otherVideo as $other)
+                        <div class="item d-flex flex-column text-white">
+                            <div class="position-relative">
+                                <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                    style="background-color: #353839;">
+                                    <small>12:48</small>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
+                                    alt="Thumbnail" class="rounded">
+                            </div>
+                            <h5 class="fw-bold mt-2">{{ $other->title }}</h5>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                    style="width: 25px;" alt="Avatar" />
+                                <h6 class="m-0 fw-semibold">Pewdiepie</h6>
+                            </div>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
+                    @endforeach
                 </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 
@@ -192,8 +122,7 @@
             <div class="modal-content bg-custom">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Share this video</h1>
-                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <h6>Share:</h6>
@@ -207,8 +136,8 @@
                         </div>
 
                         <div class="item text-center">
-                            <button class="btn rounded-circle"
-                                style="background-color: #25D366; width: 50px; height: 50px;" title="Share to Whatsapp"
+                            <button class="btn rounded-circle" style="background-color: #25D366; width: 50px; height: 50px;"
+                                title="Share to Whatsapp"
                                 onclick="sendToWhatsApp('{{ route('mychannel.video.show', $video->url) }}')">
                                 <i class="fab fa-whatsapp"></i>
                             </button>
@@ -223,8 +152,8 @@
                         </div>
 
                         <div class="item">
-                            <button class="btn rounded-circle"
-                                style="background-color: #00acee; width: 50px; height: 50px;" title="Share to Twitter"
+                            <button class="btn rounded-circle" style="background-color: #00acee; width: 50px; height: 50px;"
+                                title="Share to Twitter"
                                 onclick="shareOnTwitter('{{ route('mychannel.video.show', $video->url) }}')">
                                 <i class="fab fa-twitter"></i>
                             </button>

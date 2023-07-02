@@ -108,30 +108,49 @@
 
     <script>
         const videoInput = document.getElementById('videoInput');
+        const videoPreview = document.getElementById('videoPreview');
         const durationInput = document.getElementById('duration');
         const formatInput = document.getElementById('format');
 
         videoInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
 
-            // Load video metadata to get duration
-            const video = document.createElement('video');
-            video.preload = 'metadata';
-            video.onloadedmetadata = function() {
-                window.URL.revokeObjectURL(video.src);
-                const duration = video.duration;
-                const minutes = Math.floor(duration / 60);
-                const seconds = Math.floor(duration % 60);
-                durationInput.value = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            };
-
             if (file) {
-                video.src = URL.createObjectURL(file);
-            }
+                const reader = new FileReader();
 
-            // Get file format extension
-            const format = file.name.split('.').pop();
-            formatInput.value = `.${format}`;
+                reader.onload = function(event) {
+                    videoPreview.style.display = 'block';
+                    videoPreview.src = event.target.result;
+                    defaultImage.style.display = 'none'; // Hide the default image when video is selected
+
+                    // Load video metadata to get duration
+                    const video = document.createElement('video');
+                    video.preload = 'metadata';
+                    video.onloadedmetadata = function() {
+                        window.URL.revokeObjectURL(video.src);
+                        const duration = video.duration;
+                        const minutes = Math.floor(duration / 60);
+                        const seconds = Math.floor(duration % 60);
+                        durationInput.value = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    };
+
+                    video.src = URL.createObjectURL(file);
+
+                    // Get file format extension
+                    const format = file.name.split('.').pop();
+                    formatInput.value = `.${format}`;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                // If no file selected, show the default image and hide the video
+                videoPreview.style.display = 'none';
+                defaultImage.style.display = 'block';
+
+                // Reset duration and format inputs
+                durationInput.value = '';
+                formatInput.value = '';
+            }
         });
     </script>
 

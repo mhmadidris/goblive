@@ -120,6 +120,9 @@
                         <li class="nav-item {{ Request::is('/') ? 'fw-bold' : '' }} h5 mx-1">
                             <a class="nav-link text-white" href="{{ url('/') }}">Home</a>
                         </li>
+                        <li class="nav-item {{ Request::is('live') ? 'fw-bold' : '' }} h5 mx-1">
+                            <a class="nav-link text-white" href="{{ url('live') }}">Live</a>
+                        </li>
                         <li class="nav-item {{ Request::is('video') ? 'fw-bold' : '' }} h5 mx-1">
                             <a class="nav-link text-white" href="{{ route('video.index') }}">Video</a>
                         </li>

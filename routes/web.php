@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\LivestreamController;
 use App\Http\Controllers\SubscriptionController;
 
 /*
@@ -23,6 +24,8 @@ Route::post('subscribe/{channel}', [SubscriptionController::class, 'subscribe'])
 Route::post('unsubscribe/{channel}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 
 Route::resource('/', HomeController::class);
+
+Route::get('/live', [LivestreamController::class, 'retrieveLiveStreams']);
 
 Route::resource('/video', VideoController::class);
 

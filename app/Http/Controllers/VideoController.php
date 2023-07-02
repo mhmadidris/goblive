@@ -66,17 +66,12 @@ class VideoController extends Controller
      */
     public function show($url)
     {
-        $video = Video::where('url', $url)->first();
+        $video = Video::join('channels', 'channels.id', 'videos.channel_id')->join('users', 'users.id', 'channels.user_id')->where('url', $url)->first();
 
-        if ($video) {
-            $video->refresh(); // Retrieve the latest data from the database
-            $video->increment('views');
+        $otherVideo = Video::join('channels', 'channels.id', 'videos.channel_id')->get();
 
-            return view('pages.front.detail-video', compact('video'));
-        } else {
-            // Handle the case when the video is not found
-            dd("not found");
-        }
+        $video->increment('views');
+        return view('pages.front.detail-video', compact('video', 'otherVideo'));
     }
 
     /**
@@ -84,7 +79,7 @@ class VideoController extends Controller
      */
     public function edit(Video $video)
     {
-        //
+        return view('pages.channel.video.edit', compact('video'));
     }
 
     /**
