@@ -6,6 +6,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\LivestreamController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\YoutubeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,9 @@ Route::post('unsubscribe/{channel}', [SubscriptionController::class, 'unsubscrib
 
 Route::resource('/', HomeController::class);
 
-Route::get('/live', [LivestreamController::class, 'retrieveLiveStreams']);
+
+Route::get('/youtube/callback', [YoutubeController::class, 'youtubeCallback'])->name('youtube.callback');
+Route::get('/youtube/livestream', [YoutubeController::class, 'getLiveStream'])->name('youtube.livestream');
 
 Route::resource('/video', VideoController::class);
 
@@ -38,7 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::resource('/', ChannelController::class);
 
         Route::resource('video', VideoController::class);
-        Route::get('/video/{url}', [VideoController::class, 'show'])->name('video.show');
+        // Route::get('/video/{url}', [VideoController::class, 'show'])->name('video.show');
 
         Route::get('detail', function () {
             return view('pages.front.detail-video');

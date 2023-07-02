@@ -54,9 +54,8 @@
 
         {{-- <h5 class="text-white">Result of <strong>"{{ 'Mobile Legends' }}"</strong></h5> --}}
 
-        <div class="container">
-            <div class="row">
-                {{-- @foreach ($videos as $item)
+        <div class="row">
+            {{-- @foreach ($videos as $item)
                     <div class="col-md-3 mb-3">
                         <div class="d-flex flex-column text-white">
                             <div class="position-relative">
@@ -78,8 +77,7 @@
                         </div>
                     </div>
                 @endforeach --}}
-                <h1>live</h1>
-            </div>
+            <h1>live</h1>
         </div>
     </div>
 @endsection
