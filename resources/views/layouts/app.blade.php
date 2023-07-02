@@ -119,16 +119,16 @@
 
                     <!-- Center of Navbar -->
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item {{ Request::is('/') ? 'fw-bold' : '' }} h5 mx-1">
+                        <li class="nav-item {{ Request::is('/') ? 'fw-bolder' : '' }} h5 mx-1">
                             <a class="nav-link text-white" href="{{ url('/') }}">Home</a>
                         </li>
-                        <li class="nav-item {{ Request::is('live') ? 'fw-bold' : '' }} h5 mx-1">
-                            <a class="nav-link text-white" href="{{ url('live') }}">Live</a>
-                        </li>
-                        <li class="nav-item {{ Request::is('video') ? 'fw-bold' : '' }} h5 mx-1">
+                        <li class="nav-item {{ Request::is('video') ? 'fw-bolder' : '' }} h5 mx-1">
                             <a class="nav-link text-white" href="{{ route('video.index') }}">Video</a>
                         </li>
-                        <li class="nav-item h5 mx-1 {{ Request::is('about') ? 'fw-bold' : '' }}">
+                        <li class="nav-item {{ Request::is('livestream') ? 'fw-bolder' : '' }} h5 mx-1">
+                            <a class="nav-link text-white" href="{{ url('livestream') }}">Livestream</a>
+                        </li>
+                        <li class="nav-item h5 mx-1 {{ Request::is('about') ? 'fw-bolder' : '' }}">
                             <a class="nav-link text-white" href="{{ url('/about') }}">About</a>
                         </li>
                         <!-- Add more menu items here as needed -->

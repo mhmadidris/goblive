@@ -9,7 +9,9 @@
         </span>
     </div>
 
-    <h5 class="text-white my-3">Result of <strong>"{{ 'Mobile Legends' }}"</strong></h5>
+    @if ($search != null)
+        <h5 class="text-white my-3">Result of <strong>"{{ $search }}"</strong></h5>
+    @endif
 
     <div class="row">
         @foreach ($videos as $item)

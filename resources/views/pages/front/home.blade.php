@@ -10,13 +10,16 @@
                     us!</p>
             </div>
             <div class="d-flex flex-column w-50 text-white">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/sUKwTVAc0Vo?autoplay=1&mute=1"
-                    title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen class="rounded"></iframe>
-                <p class="fw-bold mt-2" style="font-size: 1rem;">The best streamers gather to have a good time, be among us,
-                    join
-                    us!</p>
+                @foreach ($livestreams as $livestream)
+                    <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/{{ $livestream->id->videoId }}?autoplay=1&mute=1"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen class="rounded"></iframe>
+                    <p class="fw-bold mt-2" style="font-size: 1rem;">The best streamers gather to have a good time, be among
+                        us,
+                        join us!</p>
+                @endforeach
             </div>
         </div>
 

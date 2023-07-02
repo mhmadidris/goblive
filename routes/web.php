@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
-use App\Http\Controllers\LivestreamController;
-use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\YoutubeController;
 
 /*
@@ -21,14 +20,18 @@ use App\Http\Controllers\YoutubeController;
 
 Auth::routes();
 
-Route::post('subscribe/{channel}', [SubscriptionController::class, 'subscribe'])->name('subscribe');
-Route::post('unsubscribe/{channel}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
+// Route::post('subscribe/{channel}', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+// Route::post('unsubscribe/{channel}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 
 Route::resource('/', HomeController::class);
 
+Route::get('livestream', [YoutubeController::class, 'getLivestreams'])->name('youtube.livestreams');
+Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livestream.show');
 
-Route::get('/youtube/callback', [YoutubeController::class, 'youtubeCallback'])->name('youtube.callback');
-Route::get('/youtube/livestream', [YoutubeController::class, 'getLiveStream'])->name('youtube.livestream');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+
+// Route::get('/youtube/callback', [YoutubeController::class, 'youtubeCallback'])->name('youtube.callback');
+// Route::get('/youtube/livestream', [YoutubeController::class, 'getLiveStream'])->name('youtube.livestream');
 
 Route::resource('/video', VideoController::class);
 
@@ -49,7 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 });
 
-Route::middleware('auth')->group(function () {
-    Route::post('/subscribe/{channel}', 'SubscriptionController@subscribe')->name('subscribe');
-    Route::post('/unsubscribe/{channel}', 'SubscriptionController@unsubscribe')->name('unsubscribe');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::post('/subscribe/{channel}', 'SubscriptionController@subscribe')->name('subscribe');
+//     Route::post('/unsubscribe/{channel}', 'SubscriptionController@unsubscribe')->name('unsubscribe');
+// });
