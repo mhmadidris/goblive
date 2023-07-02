@@ -36,6 +36,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @livewireStyles
+
     <style>
         body {
             font-family: 'Raleway';
@@ -92,7 +95,6 @@
             }
         });
     </script>
-
 </head>
 
 <body>
@@ -204,7 +206,7 @@
         $('.owl-carousel').owlCarousel({
             loop: false,
             margin: 15,
-            nav: true,
+            nav: false,
             dots: false,
             responsive: {
                 0: {
@@ -219,6 +221,8 @@
             }
         });
     </script>
+
+    @livewireScripts
 </body>
 
 </html>

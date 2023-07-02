@@ -35,10 +35,10 @@
 
                         <div class="card card-body" style="width: 25%; height: 26.5rem;">
                             <div class="mb-3 d-flex flex-column">
-                                <label for="imageInput" class="form-label fw-semibold">Select thumbnail:</label>
+                                <label for="imageInput" class="form-label fw-semibold">Select Thumbnail:</label>
                                 <img class="rounded shadow-sm mb-2" id="imagePreview"
                                     src="{{ asset('images/default-thumbnail.png') }}" alt="Image Preview"
-                                    style="width: 100%; height: 10rem;object-fit: cover;">
+                                    style="width: 100%; height: 10rem; object-fit:unset;">
                                 <input type="file" class="form-control" name="thumbnail" id="imageInput" accept="image/*"
                                     required>
                             </div>
@@ -56,7 +56,8 @@
                                     <h6><strong>Duration:</strong></h6>
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="duration" name="duration" class="form-control" readonly>
+                                    <input type="text" id="duration" name="duration" class="form-control border-0 p-0"
+                                        readonly>
                                 </div>
                             </div>
                             <div class="row">
@@ -64,7 +65,8 @@
                                     <h6><strong>Format:</strong></h6>
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="format" name="format" class="form-control" readonly>
+                                    <input type="text" id="format" name="format" class="form-control border-0 p-0"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -132,6 +134,8 @@
                         const minutes = Math.floor(duration / 60);
                         const seconds = Math.floor(duration % 60);
                         durationInput.value = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                        durationInput.value = duration ?
+                            `${minutes}:${seconds.toString().padStart(2, '0')}` : '-';
                     };
 
                     video.src = URL.createObjectURL(file);
@@ -148,7 +152,7 @@
                 defaultImage.style.display = 'block';
 
                 // Reset duration and format inputs
-                durationInput.value = '';
+                durationInput.value = '-';
                 formatInput.value = '';
             }
         });
@@ -169,6 +173,43 @@
                 });
 
                 reader.readAsDataURL(file);
+            }
+        });
+
+        imageInput.addEventListener('input', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const fileSize = file.size / 1024 / 1024; // Convert to MB
+                const img = new Image();
+
+                img.src = URL.createObjectURL(file);
+
+                img.onload = function() {
+                    const width = img.width;
+                    const height = img.height;
+
+                    if (width === 1280 && height === 720 && fileSize <= 2) {
+                        // Valid image
+                        // You can add additional logic here, such as displaying success message, enabling submit button, etc.
+                    } else {
+                        // Invalid image
+                        imageInput.value = ''; // Clear the file input field
+                        imagePreview.src =
+                            '{{ asset('images/default-thumbnail.png') }}'; // Reset the preview image
+
+                        if (width !== 1280 || height !== 720) {
+                            alert(
+                                'Invalid image dimensions. Please select an image with dimensions 1280 x 720 pixels.'
+                            );
+                        }
+
+                        if (fileSize > 2) {
+                            alert('Invalid image size. Please select an image with a maximum size of 2MB.');
+                        }
+                        // You can add additional logic here, such as displaying an error message, disabling submit button, etc.
+                    }
+                };
             }
         });
     </script>

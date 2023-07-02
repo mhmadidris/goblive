@@ -48,3 +48,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         });
     });
 });
+
+Route::middleware('auth')->group(function () {
+    Route::post('/subscribe/{channel}', 'SubscriptionController@subscribe')->name('subscribe');
+    Route::post('/unsubscribe/{channel}', 'SubscriptionController@unsubscribe')->name('unsubscribe');
+});

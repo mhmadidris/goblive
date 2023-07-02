@@ -60,16 +60,16 @@
                                     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
                                     alt="avatar">
                                 <div class="d-flex flex-column">
-                                    <h5 class="fw-bold">{{ $video->name }}</h5>
-                                    <p class="fw-medium p-0 m-0">123 Subscribers</p>
+                                    <h5 class="fw-bold">{{ ucfirst($channel->name) }}</h5>
+                                    {{-- <p class="fw-medium p-0 m-0">123 Subscribers</p> --}}
                                 </div>
                             </div>
                             <div>
-                                @if (Auth::user() && $video->user_id != Auth::user()->id)
+                                {{-- @if (Auth::user() && $video->user_id != Auth::user()->id)
                                     <button type="button" class="btn btn-sm btn-primary">Subscribe</button>
                                 @elseif (Auth::user() && $video->user_id == Auth::user()->id)
                                     <a href="" class="btn btn-sm btn-primary">Edit Video</a>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
 
@@ -90,29 +90,31 @@
                 </div>
             </div>
 
-            @if (Auth::user() && $video->user_id != Auth::user()->id)
-                <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
-                <div id="owl-video" class="owl-carousel owl-theme">
-                    @foreach ($otherVideo as $other)
+            <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
+            <div id="owl-video" class="owl-carousel owl-theme">
+                @foreach ($otherVideo as $other)
+                    @if ($other->url != $video->url)
                         <div class="item d-flex flex-column text-white">
                             <div class="position-relative">
                                 <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
                                     style="background-color: #353839;">
-                                    <small>12:48</small>
+                                    <small>{{ $other->duration }}</small>
                                 </div>
-                                <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                                    alt="Thumbnail" class="rounded">
+                                <img src="{{ asset('storage/' . $other->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                    style="width: 100%; height: 10rem; object-fit: cover;">
                             </div>
-                            <h5 class="fw-bold mt-2">{{ $other->title }}</h5>
+                            <a href="{{ $other->url }}" class="nav-link">
+                                <h5 class="fw-bold mt-2">{{ $other->title }}</h5>
+                            </a>
                             <div class="d-flex align-items-center gap-2">
                                 <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
                                     style="width: 25px;" alt="Avatar" />
-                                <h6 class="m-0 fw-semibold">Pewdiepie</h6>
+                                <h6 class="m-0 fw-semibold">{{ $other->name }}</h6>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            @endif
+                    @endif
+                @endforeach
+            </div>
         </div>
     </div>
 

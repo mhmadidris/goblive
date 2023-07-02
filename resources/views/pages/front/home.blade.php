@@ -24,108 +24,32 @@
         <div class="d-flex flex-column">
             <div class="d-flex flex-row justify-content-between align-content-center align-items-center text-white mb-3">
                 <h4 class="fw-bold">Latest Videos</h4>
-                <a href="" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
+                {{-- <a href="{{ route('video.index') }}" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
                     style="background-color: #353839;">
                     See all
-                </a>
+                </a> --}}
             </div>
             <div class="owl-carousel owl-theme">
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                @foreach ($latestVideos as $itemLatest)
+                    <div class="item d-flex flex-column text-white">
+                        <div class="position-relative">
+                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                style="background-color: #353839;">
+                                <small>{{ $itemLatest->duration }}</small>
+                            </div>
+                            <img src="{{ asset('storage/' . $itemLatest->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="width: 100%; height: 10rem; object-fit: cover;">
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                        <a href="{{ route('video.show', $itemLatest->url) }}" class="nav-link">
+                            <h5 class="fw-bold mt-2">{{ ucfirst($itemLatest->title) }}</h5>
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ $itemLatest->channel_name }}</h6>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
                     </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         {{-- End Latest Videos --}}
@@ -134,108 +58,32 @@
         <div class="d-flex flex-column">
             <div class="d-flex flex-row justify-content-between align-content-center align-items-center text-white mb-3">
                 <h4 class="fw-bold">Mobile Games</h4>
-                <a href="" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
-                    style="background-color: #353839;">
+                <a href="{{ route('video.index', ['category' => 'Mobile']) }}"
+                    class="btn btn-sm rounded-pill px-4 fw-semibold text-white" style="background-color: #353839;">
                     See all
                 </a>
             </div>
             <div class="owl-carousel owl-theme">
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                @foreach ($mobileVideos as $itemMobile)
+                    <div class="item d-flex flex-column text-white">
+                        <div class="position-relative">
+                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                style="background-color: #353839;">
+                                <small>{{ $itemMobile->duration }}</small>
+                            </div>
+                            <img src="{{ asset('storage/' . $itemMobile->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="width: 100%; height: 10rem; object-fit: cover;">
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                        <a href="{{ route('video.show', $itemMobile->url) }}" class="nav-link">
+                            <h5 class="fw-bold mt-2">{{ ucfirst($itemMobile->title) }}</h5>
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ $itemMobile->channel_name }}</h6>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
                     </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         {{-- End Mobile Games Videos --}}
@@ -244,108 +92,32 @@
         <div class="d-flex flex-column">
             <div class="d-flex flex-row justify-content-between align-content-center align-items-center text-white mb-3">
                 <h4 class="fw-bold">Console Games</h4>
-                <a href="" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
-                    style="background-color: #353839;">
+                <a href="{{ route('video.index', ['category' => 'Console']) }}"
+                    class="btn btn-sm rounded-pill px-4 fw-semibold text-white" style="background-color: #353839;">
                     See all
                 </a>
             </div>
             <div class="owl-carousel owl-theme">
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                @foreach ($consoleVideos as $itemConsole)
+                    <div class="item d-flex flex-column text-white">
+                        <div class="position-relative">
+                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                style="background-color: #353839;">
+                                <small>{{ $itemConsole->duration }}</small>
+                            </div>
+                            <img src="{{ asset('storage/' . $itemConsole->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="width: 100%; height: 10rem; object-fit: cover;">
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                        <a href="{{ route('video.show', $itemConsole->url) }}" class="nav-link">
+                            <h5 class="fw-bold mt-2">{{ ucfirst($itemConsole->title) }}</h5>
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ $itemConsole->channel_name }}</h6>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
                     </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         {{-- End Console Games Videos --}}
@@ -354,108 +126,32 @@
         <div class="d-flex flex-column">
             <div class="d-flex flex-row justify-content-between align-content-center align-items-center text-white mb-3">
                 <h4 class="fw-bold">PC Games</h4>
-                <a href="" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
-                    style="background-color: #353839;">
+                <a href="{{ route('video.index', ['category' => 'PC']) }}"
+                    class="btn btn-sm rounded-pill px-4 fw-semibold text-white" style="background-color: #353839;">
                     See all
                 </a>
             </div>
             <div class="owl-carousel owl-theme">
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                @foreach ($pcVideos as $itemPc)
+                    <div class="item d-flex flex-column text-white">
+                        <div class="position-relative">
+                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                style="background-color: #353839;">
+                                <small>{{ $itemPc->duration }}</small>
+                            </div>
+                            <img src="{{ asset('storage/' . $itemPc->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="width: 100%; height: 10rem; object-fit: cover;">
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
+                        <a href="{{ route('video.show', $itemPc->url) }}" class="nav-link">
+                            <h5 class="fw-bold mt-2">{{ ucfirst($itemPc->title) }}</h5>
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ $itemPc->channel_name }}</h6>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
                     </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
-                <div class="item d-flex flex-column text-white">
-                    <div class="position-relative">
-                        <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                            style="background-color: #353839;">
-                            <small>12:48</small>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1634984884181-f8a6b98decdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
-                            alt="Thumbnail" class="rounded">
-                    </div>
-                    <h5 class="fw-bold mt-2">Serious fight dogs and cats</h5>
-                    <div class="d-flex align-items-center gap-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                            style="width: 25px;" alt="Avatar" />
-                        <h6 class="m-0 fw-semibold">Pewdiepie</h6>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         {{-- End PC Games Videos --}}

@@ -15,9 +15,9 @@ class ChannelController extends Controller
     public function index()
     {
         $myChannel = Channel::where('user_id', Auth::user()->id)->first();
-        $myVideo = Video::where('channel_id', $myChannel->id)->orderBy('created_at', 'DESC')->get();
+        // $myVideo = Video::where('channel_id', $myChannel->id)->orderBy('created_at', 'DESC')->get();
 
-        return view('pages.channel.my-channel')->with('myChannel', $myChannel)->with('videos', $myVideo);
+        return view('pages.channel.my-channel')->with('myChannel', $myChannel);
     }
 
     /**

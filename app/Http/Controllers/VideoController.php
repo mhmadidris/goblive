@@ -15,11 +15,11 @@ class VideoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $videos = Video::join('channels', 'channels.id', '=', 'videos.channel_id')->where('visibility', 'Public')->inRandomOrder()->get();
+        $category = $request->input('category');
 
-        return view('pages.front.video')->with('videos', $videos);
+        return view('pages.front.video', compact('category'));
     }
 
     /**
@@ -66,13 +66,27 @@ class VideoController extends Controller
      */
     public function show($url)
     {
-        $video = Video::join('channels', 'channels.id', 'videos.channel_id')->join('users', 'users.id', 'channels.user_id')->where('url', $url)->first();
+        $video = Video::where('url', $url)->first();
 
-        $otherVideo = Video::join('channels', 'channels.id', 'videos.channel_id')->get();
+        $channel = Channel::join('users', 'users.id', 'channels.user_id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
 
-        $video->increment('views');
-        return view('pages.front.detail-video', compact('video', 'otherVideo'));
+        $otherVideo = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->where('visibility', 'Public')
+            ->inRandomOrder()
+            ->get();
+
+        if ($video) {
+            $video->refresh(); // Retrieve the latest data from the database
+            $video->increment('views');
+
+            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel'));
+        } else {
+            // Handle the case when the video is not found
+            dd("not found");
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -85,17 +99,68 @@ class VideoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Video $video)
+    public function update(Request $request, $id)
     {
-        //
+        $video = Video::findOrFail($id);
+        $video->refresh();
+
+        // Store the original video and thumbnail paths
+        $originalVideo = $video->video;
+        $originalThumbnail = $video->thumbnail;
+
+        $video->title = $request->input('title');
+        $video->duration = $request->input('duration');
+        $video->format = $request->input('format');
+        $video->category = $request->input('category');
+        $video->visibility = $request->input('visibility');
+        $video->description = $request->input('description');
+
+        // Check if a new video file is uploaded
+        if ($request->hasFile('video')) {
+            // Remove the original video file
+            if ($originalVideo) {
+                Storage::delete('public/' . $originalVideo);
+            }
+
+            $videoFile = $request->file('video');
+            $videoPath = $videoFile->store('videos', 'public');
+            $video->video = $videoPath;
+        }
+
+        // Check if a new thumbnail file is uploaded
+        if ($request->hasFile('thumbnail')) {
+            // Remove the original thumbnail file
+            if ($originalThumbnail) {
+                Storage::delete('public/' . $originalThumbnail);
+            }
+
+            $thumbnailFile = $request->file('thumbnail');
+            $thumbnailPath = $thumbnailFile->store('thumbnails', 'public');
+            $video->thumbnail = $thumbnailPath;
+        }
+
+        $video->save();
+
+        return redirect()->route('mychannel.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Video $video)
+    public function destroy($id)
     {
-        //
+        $video = Video::findOrFail($id);
+
+        // Delete the video file from the storage disk
+        Storage::delete('public/' . $video->video);
+
+        // Delete the thumbnail file from the storage disk
+        Storage::delete('public/' . $video->thumbnail);
+
+        // Delete the video record from the database
+        $video->delete();
+
+        return redirect()->back();
     }
 
     public function incrementViews(Video $video)

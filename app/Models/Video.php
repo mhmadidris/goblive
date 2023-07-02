@@ -10,4 +10,6 @@ class Video extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $fillable = ['views'];
 }
