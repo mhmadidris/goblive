@@ -6,6 +6,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\YoutubeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,8 @@ Route::get('/about', function () {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::name('mychannel.')->prefix('mychannel')->group(function () {
-        Route::resource('/', ChannelController::class);
+        Route::resource('/', ChannelController::class)->except(['update']);
+        Route::put('/{id}', [ChannelController::class, 'update'])->name('update');
 
         Route::resource('video', VideoController::class);
         // Route::get('/video/{url}', [VideoController::class, 'show'])->name('video.show');

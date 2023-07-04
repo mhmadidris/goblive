@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravolt\Avatar\Facade as Avatar;
+use Illuminate\Support\Facades\File;
 
 class RegisterController extends Controller
 {
@@ -71,11 +73,21 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+        $path = storage_path('app/public/avatars/');
+        $avatarName = 'avatar-' . $user->id . '.png';
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true, true);
+        }
+
+        Avatar::create($user->name)->save($path . $avatarName);
+
         // $user->attachRole('admin');
 
         Channel::create([
             'user_id' => $user->id,
             'username' => Channel::generateUniqueUsername($user->name),
+            'avatar' => 'avatars/' . $avatarName,
         ]);
 
         return $user;

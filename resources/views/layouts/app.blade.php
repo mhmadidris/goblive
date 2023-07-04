@@ -164,7 +164,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"
                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     v-pre>
-                                    <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80"
+                                    <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('avatar')) }}"
                                         alt="Avatar" class="rounded-circle mx-2"
                                         style="width: 40px; height: 40px; border: 2px solid white;">
                                     {{-- {{ Auth::user()->name }} --}}

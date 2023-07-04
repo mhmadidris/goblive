@@ -22,7 +22,7 @@ class YoutubeController extends Controller
             'part' => 'snippet',
             'eventType' => 'live',
             'type' => 'video',
-            'maxResults' => 10, // Adjust the number of results as per your requirement
+            'maxResults' => 20, // Adjust the number of results as per your requirement
             'q' => 'gaming streamer', // Replace 'game' with the game category you want to filter
             'regionCode' => 'ID', // Set the region code to 'ID' for Indonesia
         ];
