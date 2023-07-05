@@ -2,40 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
+use App\Models\Comment;
 use Google_Service_YouTube_Comment;
 use Google_Service_YouTube_CommentThread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     public function store(Request $request)
     {
-        // Retrieve the comment details from the form
-        $livestreamId = $request->input('livestreamId');
-        $commentText = $request->input('comment');
+        $channelId = Channel::where('user_id', Auth::user()->id)->value('id');
 
-        // Create a new instance of the Google_Client
-        $client = new Google_Client();
-        $client->setApplicationName('Your Application Name');
-        $client->setDeveloperKey(env('YOUTUBE_API_KEY')); // Replace with your own API key
+        // Validate the request data
+        $validatedData = $request->validate([
+            'comment' => 'string',
+            'video_id' => 'required', // Add the validation rule for video_id
+        ]);
 
-        // Create a new instance of the Google_Service_YouTube
-        $youtube = new Google_Service_YouTube($client);
+        // Create a new comment
+        $comment = new Comment();
+        $comment->channel_id = $channelId;
+        $comment->video_id = $request->video_id; // Set the value for video_id
+        $comment->comment = $validatedData['comment'];
+        // Set other properties of the comment if necessary
 
-        // Create a new comment thread
-        $comment = new Google_Service_YouTube_CommentThread();
-        $comment->setSnippet(new Google_Service_YouTube_CommentThreadSnippet());
-        $commentSnippet = $comment->getSnippet();
-        $commentSnippet->setChannelId('YOUR_CHANNEL_ID'); // Replace with your own channel ID
-        $commentSnippet->setVideoId($livestreamId);
-        $commentSnippet->setTopLevelComment(new Google_Service_YouTube_Comment());
-        $commentSnippet->getTopLevelComment()->setSnippet(new Google_Service_YouTube_CommentSnippet());
-        $commentSnippet->getTopLevelComment()->getSnippet()->setTextOriginal($commentText);
+        // Save the comment
+        $comment->save();
 
-        // Insert the comment thread
-        $youtube->commentThreads->insert('snippet', $comment);
-
-        // Redirect back to the livestream page
-        return redirect()->back();
+        // Return a JSON response if desired
+        return response()->json(['message' => 'Comment stored successfully']);
     }
 }

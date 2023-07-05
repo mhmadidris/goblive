@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
+use App\Models\Comment;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +69,8 @@ class VideoController extends Controller
     {
         $video = Video::where('url', $url)->first();
 
+        $comments = Comment::join('channels', 'channels.id', 'comments.channel_id')->join('users', 'users.id', 'channels.user_id')->where('video_id', $video->id)->get();
+
         $channel = Channel::join('users', 'users.id', 'channels.user_id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
 
         $otherVideo = Video::join('channels', 'channels.id', 'videos.channel_id')
@@ -80,7 +83,7 @@ class VideoController extends Controller
             $video->refresh(); // Retrieve the latest data from the database
             $video->increment('views');
 
-            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel'));
+            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'comments'));
         } else {
             // Handle the case when the video is not found
             dd("not found");
