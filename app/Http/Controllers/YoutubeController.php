@@ -22,9 +22,9 @@ class YoutubeController extends Controller
             'part' => 'snippet',
             'eventType' => 'live',
             'type' => 'video',
-            'maxResults' => 20, // Adjust the number of results as per your requirement
-            'q' => 'gaming streamer', // Replace 'game' with the game category you want to filter
-            'regionCode' => 'ID', // Set the region code to 'ID' for Indonesia
+            'videoCategoryId' => '20',
+            'maxResults' => 20,
+            'regionCode' => 'US',
         ];
 
         // Call the API to fetch the livestreams data

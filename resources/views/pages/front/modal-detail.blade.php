@@ -9,25 +9,29 @@
             <div class="modal-body">
                 <div class="d-flex flex-column align-items-center gap-2">
                     <!-- Existing comments will be displayed here -->
-                    @foreach ($comments as $comment)
-                        <div class="d-flex flex-row w-100">
-                            <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $comment->user_id)->value('avatar')) }}"
-                                alt="Avatar" class="rounded-circle mx-2"
-                                style="width: 40px; height: 40px; border: 2px solid white;">
-                            <div class="d-flex flex-column gap-1 w-100">
-                                <div class="d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="fw-bold">{{ $comment->name }}</h6>
-                                    <h6 class="text-white fw-medium">{{ $comment->created_at->diffForHumans() }}</h6>
+                    <div id="commentsContainer">
+                        @foreach ($comments as $comment)
+                            <div class="d-flex flex-row w-100">
+                                <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $comment->user_id)->value('avatar')) }}"
+                                    alt="Avatar" class="rounded-circle mx-2"
+                                    style="width: 40px; height: 40px; border: 2px solid white;">
+                                <div class="d-flex flex-column gap-1 w-100">
+                                    <div class="d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="fw-bold">{{ $comment->name }}</h6>
+                                        <h6 class="text-white fw-medium">
+                                            {{ $comment->created_at->timezone('Asia/Jakarta')->diffForHumans() }}</h6>
+                                    </div>
+                                    <p>{{ $comment->comment }}</p>
                                 </div>
-                                <p>{{ $comment->comment }}</p>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
             <div id="commentForm">
                 <div class="modal-footer">
-                    <form action="{{ route('comments.store') }}" method="POST" class="d-flex flex-row gap-2 w-100">
+                    <form id="commentSubmitForm" action="{{ route('comments.store') }}" method="POST"
+                        class="d-flex flex-row gap-2 w-100">
                         @csrf
                         <input type="hidden" name="video_id" class="form-control" autocomplete="off"
                             value="{{ $video->id }}">
@@ -42,10 +46,53 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(document).ready(function() {
-        $('#commentForm').on('submit', 'form', function(event) {
+        // Function to fetch and display comments
+        function fetchComments() {
+            // Make an AJAX request to retrieve comments
+            $.ajax({
+                url: '{{ route('comments.fetch') }}', // Replace with the actual route for fetching comments
+                method: 'GET',
+                success: function(response) {
+                    // Check if comments exist
+                    if (response && response.length > 0) {
+                        // Show the comments container
+                        $('#commentsContainer').show();
+                        // Loop through the comments and append them to the container
+                        response.forEach(function(comment) {
+                            var commentElement = `
+                                <div class="d-flex flex-row w-100">
+                                    <img src="${comment.avatar}" alt="Avatar" class="rounded-circle mx-2" style="width: 40px; height: 40px; border: 2px solid white;">
+                                    <div class="d-flex flex-column gap-1 w-100">
+                                        <div class="d-flex flex-row align-items-center justify-content-between">
+                                            <h6 class="fw-bold">${comment.name}</h6>
+                                            <h6 class="text-white fw-medium">${comment.created_at}</h6>
+                                        </div>
+                                        <p>${comment.comment}</p>
+                                    </div>
+                                </div>
+                            `;
+                            $('#commentsContainer').append(commentElement);
+                        });
+                    } else {
+                        // Hide the comments container if no comments exist
+                        $('#commentsContainer').hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (optional)
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+        // Call the fetchComments function to display comments initially
+        fetchComments();
+
+        // Comment submission event handler
+        $('#commentSubmitForm').on('submit', function(event) {
             event.preventDefault();
 
             var form = $(this);
@@ -62,9 +109,30 @@
                 data: form.serialize(),
                 success: function(response) {
                     // Handle the success response (optional)
+                    // For example, you can display a success message or update the comment list dynamically without refreshing the page.
 
-                    // Reload the page to display the updated comment list
-                    location.reload();
+                    // Clear the comment input field
+                    form.find('input[name="comment"]').val('');
+
+                    // Show the comments container
+                    $('#commentsContainer').show();
+
+                    // Append the new comment
+                    var newComment = `
+                        <div class="d-flex flex-row w-100">
+                            <img src="${response.avatar}" alt="Avatar" class="rounded-circle mx-2" style="width: 40px; height: 40px; border: 2px solid white;">
+                            <div class="d-flex flex-column gap-1 w-100">
+                                <div class="d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="fw-bold">${response.name}</h6>
+                                    <h6 class="text-white fw-medium">${response.created_at}</h6>
+                                </div>
+                                <p>${response.comment}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    // Append the new comment to the comments container
+                    $('#commentsContainer').append(newComment);
                 },
                 error: function(xhr, status, error) {
                     // Handle the error response (optional)
@@ -74,6 +142,7 @@
         });
     });
 </script>
+
 
 
 

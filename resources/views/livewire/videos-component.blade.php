@@ -58,21 +58,21 @@
             @foreach ($videos as $item)
                 <div class="col-md-3 mb-4">
                     <div class="d-flex flex-column text-white">
-                        <div class="position-relative">
-                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                                style="background-color: #353839;">
-                                <small>{{ $item->duration }}</small>
-                            </div>
-                            <img src="{{ asset('storage/' . $item->thumbnail) }}" class="rounded"
-                                style="width: 100%; height: 10rem; object-fit: cover;">
-                        </div>
                         <a href="{{ route('video.show', $item->url) }}" class="nav-link">
+                            <div class="position-relative">
+                                <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                    style="background-color: #353839;">
+                                    <small>{{ $item->duration }}</small>
+                                </div>
+                                <img src="{{ asset('storage/' . $item->thumbnail) }}" class="rounded"
+                                    style="width: 100%; height: 10rem; object-fit: cover;">
+                            </div>
                             <h5 class="fw-bold mt-2">{{ ucfirst($item->title) }}</h5>
                         </a>
                         <div class="d-flex align-items-center gap-2">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                                style="width: 25px;" alt="Avatar" />
-                            <h6 class="m-0 fw-semibold">{{ ucfirst($item->username) }}</h6>
+                            <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $item->user_id)->value('avatar')) }}"
+                                class="rounded-circle" style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ ucfirst($item->name) }}</h6>
                         </div>
                     </div>
                 </div>

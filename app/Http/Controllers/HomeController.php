@@ -29,9 +29,9 @@ class HomeController extends Controller
             'part' => 'snippet',
             'eventType' => 'live',
             'type' => 'video',
-            'maxResults' => 1, // Retrieve only one video
-            'q' => 'gaming streamer', // Replace 'gaming streamer' with the desired gaming streamer's name or channel name
-            'regionCode' => 'ID', // Set the region code to 'ID' for Indonesia
+            'videoCategoryId' => '20',
+            'maxResults' => 1,
+            'regionCode' => 'US',
         ];
 
         // Call the API to fetch the livestreams data
@@ -51,7 +51,7 @@ class HomeController extends Controller
         // Fetch other video categories
         $latestVideos = Video::join('channels', 'channels.id', 'videos.channel_id')
             ->join('users', 'users.id', 'channels.user_id')
-            ->select('videos.*', 'users.name as channel_name')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
             ->where('videos.visibility', 'Public')
             ->orderBy('videos.created_at', 'ASC')
             ->take(6)
@@ -59,7 +59,7 @@ class HomeController extends Controller
 
         $mobileVideos = Video::join('channels', 'channels.id', 'videos.channel_id')
             ->join('users', 'users.id', 'channels.user_id')
-            ->select('videos.*', 'users.name as channel_name')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
             ->where('videos.visibility', 'Public')
             ->where('category', 'Mobile')
             ->orderBy('videos.created_at', 'ASC')
@@ -68,7 +68,7 @@ class HomeController extends Controller
 
         $consoleVideos = Video::join('channels', 'channels.id', 'videos.channel_id')
             ->join('users', 'users.id', 'channels.user_id')
-            ->select('videos.*', 'users.name as channel_name')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
             ->where('videos.visibility', 'Public')
             ->where('category', 'Console')
             ->orderBy('videos.created_at', 'ASC')
@@ -77,7 +77,7 @@ class HomeController extends Controller
 
         $pcVideos = Video::join('channels', 'channels.id', 'videos.channel_id')
             ->join('users', 'users.id', 'channels.user_id')
-            ->select('videos.*', 'users.name as channel_name')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
             ->where('videos.visibility', 'Public')
             ->where('category', 'PC')
             ->orderBy('videos.created_at', 'ASC')

@@ -62,7 +62,7 @@
                         <div class="d-flex flex-row justify-content-between align-content-center align-items-center">
                             <div class="d-flex flex-row align-content-center align-items-center gap-2">
                                 <img class="rounded-circle shadow" style="width: 3.5rem; height: 3.5rem; object-fit: cover;"
-                                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                                    src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $channel->user_id)->value('avatar')) }}"
                                     alt="avatar">
                                 <div class="d-flex flex-column">
                                     <h5 class="fw-bold">{{ ucfirst($channel->name) }}</h5>
@@ -95,10 +95,10 @@
                 </div>
             </div>
 
-            <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
-            <div id="owl-video" class="owl-carousel owl-theme">
-                @foreach ($otherVideo as $other)
-                    @if ($other->url != $video->url)
+            @if (count($otherVideo) > 0)
+                <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
+                <div id="owl-video" class="owl-carousel owl-theme">
+                    @foreach ($otherVideo as $other)
                         <div class="item d-flex flex-column text-white">
                             <div class="position-relative">
                                 <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
@@ -112,14 +112,14 @@
                                 <h5 class="fw-bold mt-2">{{ $other->title }}</h5>
                             </a>
                             <div class="d-flex align-items-center gap-2">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                                    style="width: 25px;" alt="Avatar" />
+                                <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $other->user_id)->value('avatar')) }}"
+                                    class="rounded-circle" style="width: 25px;" alt="Avatar" />
                                 <h6 class="m-0 fw-semibold">{{ $other->name }}</h6>
                             </div>
                         </div>
-                    @endif
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 

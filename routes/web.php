@@ -30,6 +30,7 @@ Route::get('livestream', [YoutubeController::class, 'getLivestreams'])->name('yo
 Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livestream.show');
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/comments/fetch', [CommentController::class, 'fetchComments'])->name('comments.fetch');
 
 // Route::get('/youtube/callback', [YoutubeController::class, 'youtubeCallback'])->name('youtube.callback');
 // Route::get('/youtube/livestream', [YoutubeController::class, 'getLiveStream'])->name('youtube.livestream');

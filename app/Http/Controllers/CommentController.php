@@ -34,4 +34,11 @@ class CommentController extends Controller
         // Return a JSON response if desired
         return response()->json(['message' => 'Comment stored successfully']);
     }
+
+    public function fetchComments(Request $request)
+    {
+        $comments = Comment::all(); // Retrieve all comments from the database
+
+        return response()->json($comments); // Return the comments as a JSON response
+    }
 }

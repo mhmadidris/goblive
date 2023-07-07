@@ -15,7 +15,7 @@ class VideosComponent extends Component
 
     public function render()
     {
-        $query = Video::join('channels', 'channels.id', '=', 'videos.channel_id')
+        $query = Video::join('channels', 'channels.id', '=', 'videos.channel_id')->join('users', 'users.id', 'channels.user_id')
             ->where('visibility', 'Public');
 
         if ($this->category) {

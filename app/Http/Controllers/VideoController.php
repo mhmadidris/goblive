@@ -59,7 +59,7 @@ class VideoController extends Controller
         // Store the thumbnail file in the storage disk under the 'thumbnails' directory
         $request->file('thumbnail')->store('public/thumbnails');
 
-        return redirect()->back();
+        return redirect()->route('mychannel.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class VideoController extends Controller
     {
         $video = Video::where('url', $url)->first();
 
-        $comments = Comment::join('channels', 'channels.id', 'comments.channel_id')->join('users', 'users.id', 'channels.user_id')->where('video_id', $video->id)->get();
+        $comments = Comment::join('channels', 'channels.id', 'comments.channel_id')->join('users', 'users.id', 'channels.user_id')->where('video_id', $video->id)->orderBy('comments.created_at', 'DESC')->get();
 
         $channel = Channel::join('users', 'users.id', 'channels.user_id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
 
