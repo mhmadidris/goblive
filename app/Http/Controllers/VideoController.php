@@ -69,8 +69,6 @@ class VideoController extends Controller
     {
         $video = Video::where('url', $url)->first();
 
-        $comments = Comment::join('channels', 'channels.id', 'comments.channel_id')->join('users', 'users.id', 'channels.user_id')->where('video_id', $video->id)->orderBy('comments.created_at', 'DESC')->get();
-
         $channel = Channel::join('users', 'users.id', 'channels.user_id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
 
         $otherVideo = Video::join('channels', 'channels.id', 'videos.channel_id')
@@ -83,7 +81,7 @@ class VideoController extends Controller
             $video->refresh(); // Retrieve the latest data from the database
             $video->increment('views');
 
-            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'comments'));
+            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel'));
         } else {
             // Handle the case when the video is not found
             dd("not found");

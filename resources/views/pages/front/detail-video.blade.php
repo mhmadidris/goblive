@@ -11,8 +11,8 @@
         <video src="{{ asset('storage/' . $video->video) }}" class="px-4" controls autoplay
             style="height: 75vh; width: 100%;"></video>
     </div>
-    <div class="px-4 py-2">
-        <div class="container-fluid">
+    <div class="container-fluid px-4 py-2 d-flex flex-row gap-4">
+        <div class="w-100">
             <div class="d-flex flex-row gap-4">
                 <div class="w-100 d-flex flex-column">
                     <h2 class="fw-bold" style="text-align: justify;">{{ $video->title }}
@@ -23,7 +23,7 @@
                             <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
                                 <i class="fas fa-clock"></i>
                                 <span title="{{ $video->created_at }}">
-                                    {{ $video->created_at->diffForHumans(null, true) }} ago
+                                    {{ $video->created_at->diffForHumans(null, true) }} yang lalu
                                 </span>
                             </div>
 
@@ -45,11 +45,6 @@
                         @if (Auth::user() && $video->user_id != Auth::user()->id)
                             <div>
                                 <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
-                                    data-bs-toggle="modal" data-bs-target="#modalComment">
-                                    <i class="fas fa-comment"></i>
-                                    Comments
-                                </button>
-                                <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
                                     data-bs-toggle="modal" data-bs-target="#modalShare">
                                     <i class="fas fa-share"></i>
                                     Share
@@ -65,17 +60,19 @@
                                     src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $channel->user_id)->value('avatar')) }}"
                                     alt="avatar">
                                 <div class="d-flex flex-column">
-                                    <h5 class="fw-bold">{{ ucfirst($channel->name) }}</h5>
-                                    {{-- <p class="fw-medium p-0 m-0">123 Subscribers</p> --}}
+                                    <h6 class="fw-bold">{{ ucfirst($channel->name) }}</h6>
+                                    <p class="fw-medium p-0 m-0"><small>123 Subscribers</small></p>
                                 </div>
                             </div>
-                            <div>
-                                {{-- @if (Auth::user() && $video->user_id != Auth::user()->id)
-                                    <button type="button" class="btn btn-sm btn-primary">Subscribe</button>
-                                @elseif (Auth::user() && $video->user_id == Auth::user()->id)
-                                    <a href="" class="btn btn-sm btn-primary">Edit Video</a>
-                                @endif --}}
-                            </div>
+                            {{-- <div>
+                                @if (Auth::user())
+                                    @if ($video->user_id != Auth::user()->id)
+                                        <button type="button" class="btn btn-sm btn-primary rounded">Subscribe</button>
+                                    @else
+                                        <a href="" class="btn btn-sm btn-secondary rounded">Edit Video</a>
+                                    @endif
+                                @endif
+                            </div> --}}
                         </div>
 
                         @if ($video->description != null)
@@ -89,38 +86,26 @@
                         @endif
                     </div>
                 </div>
-
-                <div class="card w-25 d-none" style="height: 27.5rem;">
-                    asa
-                </div>
             </div>
 
-            @if (count($otherVideo) > 0)
-                <h4 class="fw-bold mt-4 mb-3">Another Video</h4>
-                <div id="owl-video" class="owl-carousel owl-theme">
-                    @foreach ($otherVideo as $other)
-                        <div class="item d-flex flex-column text-white">
-                            <div class="position-relative">
-                                <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
-                                    style="background-color: #353839;">
-                                    <small>{{ $other->duration }}</small>
-                                </div>
-                                <img src="{{ asset('storage/' . $other->thumbnail) }}" alt="Thumbnail" class="rounded"
-                                    style="width: 100%; height: 10rem; object-fit: cover;">
-                            </div>
-                            <a href="{{ $other->url }}" class="nav-link">
-                                <h5 class="fw-bold mt-2">{{ $other->title }}</h5>
-                            </a>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $other->user_id)->value('avatar')) }}"
-                                    class="rounded-circle" style="width: 25px;" alt="Avatar" />
-                                <h6 class="m-0 fw-semibold">{{ $other->name }}</h6>
+            @livewire('comment-section', ['video' => $video])
+        </div>
+
+        {{-- @if (count($otherVideo) > 0)
+            <div class="d-flex flex-column gap-3">
+                @foreach ($otherVideo as $other)
+                    <a href="{{ $other->url }}" class="nav-link">
+                        <div class="d-flex flex-row gap-2" style="width: 20rem;">
+                            <img src="{{ asset('storage/' . $other->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="object-fit: cover; width: 7.5rem;">
+                            <div class="d-flex flex-column">
+                                <h5 class="fw-bold">{{ $other->title }}</h5>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            @endif
-        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif --}}
     </div>
 
     @include('pages.front.modal-detail')

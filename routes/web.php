@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +27,6 @@ Route::resource('/', HomeController::class);
 
 Route::get('livestream', [YoutubeController::class, 'getLivestreams'])->name('youtube.livestreams');
 Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livestream.show');
-
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::get('/comments/fetch', [CommentController::class, 'fetchComments'])->name('comments.fetch');
 
 // Route::get('/youtube/callback', [YoutubeController::class, 'youtubeCallback'])->name('youtube.callback');
 // Route::get('/youtube/livestream', [YoutubeController::class, 'getLiveStream'])->name('youtube.livestream');
