@@ -28,10 +28,9 @@ Route::resource('/', HomeController::class);
 Route::get('livestream', [YoutubeController::class, 'getLivestreams'])->name('youtube.livestreams');
 Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livestream.show');
 
-// Route::get('/youtube/callback', [YoutubeController::class, 'youtubeCallback'])->name('youtube.callback');
-// Route::get('/youtube/livestream', [YoutubeController::class, 'getLiveStream'])->name('youtube.livestream');
-
 Route::resource('/video', VideoController::class);
+
+Route::get('channel/{username}', [ChannelController::class, 'show'])->name('channel.show');
 
 Route::get('/about', function () {
     return view('pages.front.about');

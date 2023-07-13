@@ -60,7 +60,9 @@
                                     src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $channel->user_id)->value('avatar')) }}"
                                     alt="avatar">
                                 <div class="d-flex flex-column">
-                                    <h6 class="fw-bold">{{ ucfirst($channel->name) }}</h6>
+                                    <a href="{{ route('channel.show', $channel->username) }}" class="nav-link">
+                                        <h6 class="fw-bold">{{ ucfirst($channel->name) }}</h6>
+                                    </a>
                                     <p class="fw-medium p-0 m-0"><small>123 Subscribers</small></p>
                                 </div>
                             </div>

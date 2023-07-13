@@ -23,7 +23,7 @@ class CommentSection extends Component
 
     public function refreshComments()
     {
-        $this->comments = Comment::select('comments.*', 'channels.created_at AS channel_created_at', 'channels.avatar AS channel_avatar', 'users.name')
+        $this->comments = Comment::select('comments.*', 'channels.created_at AS channel_created_at', 'channels.avatar AS channel_avatar', 'users.name', 'channels.username')
             ->join('channels', 'channels.id', 'comments.channel_id')
             ->join('users', 'users.id', 'channels.user_id')
             ->where('video_id', $this->video->id)

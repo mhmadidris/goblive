@@ -9,7 +9,9 @@
                             style="width: 40px; height: 40px; border: 2px solid white;">
                         <div class="d-flex flex-column gap-1 w-100">
                             <div class="d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="fw-bold">{{ $comment->name }}</h6>
+                                <a href="{{ route('channel.show', $comment->username) }}" class="nav-link">
+                                    <h6 class="fw-bold">{{ $comment->name }}</h6>
+                                </a>
                                 <h6 class="text-white fw-medium">
                                     {{ $comment->created_at->diffForHumans(null, true) }} yang lalu</h6>
                             </div>

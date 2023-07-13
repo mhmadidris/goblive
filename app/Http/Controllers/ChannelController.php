@@ -43,9 +43,11 @@ class ChannelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Channel $channel)
+    public function show($username)
     {
-        dd("asas");
+        $channel = Channel::join('users', 'users.id', 'channels.user_id')->where('channels.username', $username)->first();
+
+        return view('pages.front.detail-channel', compact('channel'));
     }
 
     /**
