@@ -23,13 +23,13 @@
                             <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
                                 <i class="fas fa-clock"></i>
                                 <span title="{{ $video->created_at }}">
-                                    {{ $video->created_at->diffForHumans(null, true) }} yang lalu
+                                    {{ $video->created_at->diffForHumans() }}
                                 </span>
                             </div>
 
                             <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
                                 <i class="fas fa-eye"></i>
-                                <span>{{ number_format($video->views) }} views</span>
+                                <span>{{ number_format($video->views) }} Views</span>
                             </div>
 
                             {{-- <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
@@ -42,8 +42,16 @@
                                 <span>{{ $video->category }}</span>
                             </div>
                         </div>
-                        @if (Auth::user() && $video->user_id != Auth::user()->id)
+                        @if (Auth::user())
                             <div>
+                                @if (Auth::user()->id != $video->channel_id)
+                                    <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
+                                        data-bs-toggle="modal" data-bs-target="#modalDonate">
+                                        <i class="fas fa-donate"></i>
+                                        Donate
+                                    </button>
+                                @endif
+
                                 <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
                                     data-bs-toggle="modal" data-bs-target="#modalShare">
                                     <i class="fas fa-share"></i>

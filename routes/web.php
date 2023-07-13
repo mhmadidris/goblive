@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CoinController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,8 @@ Route::get('livestream', [YoutubeController::class, 'getLivestreams'])->name('yo
 Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livestream.show');
 
 Route::resource('/video', VideoController::class);
+
+Route::resource('/video/send-coin', CoinController::class);
 
 Route::get('channel/{username}', [ChannelController::class, 'show'])->name('channel.show');
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->longText('bio')->nullable();
             $table->string('lokasi')->nullable();
+            $table->integer('coin')->default(0);
             $table->timestamps();
         });
     }

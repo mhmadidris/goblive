@@ -53,3 +53,31 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal Donate -->
+<div class="modal fade" id="modalDonate" tabindex="-1" aria-labelledby="modalDonateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-custom">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalDonateLabel">Donate this video</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column justify-content-center align-items-center align-content-center">
+                    <div>
+                        <div class="card d-inline-block p-2 shadow">
+                            {!! $qrCode !!}
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <h5 class="fw-bold">Scan QR Code to send coins</h5>
+                        <small>QR Code not working? <a href="{{ $url }}" class="nav-item text-white fw-bold"
+                                style="text-decoration: underline;">Click this
+                                link</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

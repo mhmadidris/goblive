@@ -8,8 +8,10 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VideoController extends Controller
 {
@@ -69,7 +71,7 @@ class VideoController extends Controller
     {
         $video = Video::where('url', $url)->first();
 
-        $channel = Channel::join('users', 'users.id', 'channels.user_id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
+        $channel = Channel::join('users', 'users.id', 'channels.user_id', 'channels.id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
 
         $otherVideo = Video::join('channels', 'channels.id', 'videos.channel_id')
             ->join('users', 'users.id', 'channels.user_id')
@@ -77,11 +79,14 @@ class VideoController extends Controller
             ->inRandomOrder()
             ->get();
 
+        $url = route('send-coin.create', ['v' => $video->id, 'c' => $channel->id]);
+        $qrCode = QrCode::size(150)->generate($url);
+
         if ($video) {
             $video->refresh(); // Retrieve the latest data from the database
             $video->increment('views');
 
-            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel'));
+            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'qrCode', 'url'));
         } else {
             // Handle the case when the video is not found
             dd("not found");

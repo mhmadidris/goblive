@@ -37,6 +37,11 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    {{-- SweetAlert --}}
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
+    <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
+
     @livewireStyles
 
     <style>
@@ -154,28 +159,51 @@
                                 @endif
                             </div>
                         @else
-                            <li class="nav-item dropdown d-flex align-items-center justify-content-center mx-2">
+                            {{-- <li class="nav-item dropdown d-flex align-items-center justify-content-center mx-2">
                                 <a href="" class="nav-link text-white">
                                     <i class="fas fa-bell fa-lg"></i>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white d-flex" href="#"
                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     v-pre>
+                                    <div class="d-flex flex-column align-items-end">
+                                        <span class="fw-bold">{{ Auth::user()->name }}</span>
+                                        <small class="fw-medium">{{ Auth::user()->email }}</small>
+                                    </div>
                                     <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('avatar')) }}"
                                         alt="Avatar" class="rounded-circle mx-2"
                                         style="width: 40px; height: 40px; border: 2px solid white;">
-                                    {{-- {{ Auth::user()->name }} --}}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" style="background-color: #353839;"
                                     aria-labelledby="navbarDropdown">
+                                    {{-- <div
+                                        class="dropdown-item-text text-white d-flex flex-row justify-content-center align-items-center">
+                                        <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('avatar')) }}"
+                                            alt="Avatar" class="rounded-circle mx-2" style="width: 30px; height: 30px;">
+                                        <div class="d-flex flex-column">
+                                            <small class="fw-bold">{{ $channel->name }}</small>
+                                            <small>{{ $channel->email }}</small>
+                                        </div>
+                                    </div> --}}
+
+                                    @php
+                                        $myChannel = App\Models\Channel::find(Auth::user()->id);
+                                    @endphp
+                                    <div class="dropdown-item-text d-flex flex-row justify-content-center align-items-center align-content-center gap-2"
+                                        style="color: #f3c70d;">
+                                        <i class="fas fa-coins"></i>
+                                        <span class="fw-bold">{{ number_format($myChannel->coin) }}</span>
+                                    </div>
+
+                                    <hr class="hr text-white" />
+
                                     <a class="dropdown-item text-white" href="{{ route('mychannel.index') }}">
                                         {{ __('My Channel') }}
                                     </a>
-
 
                                     <a class="dropdown-item text-white" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

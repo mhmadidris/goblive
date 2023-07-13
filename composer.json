@@ -20,7 +20,9 @@
         "livewire/livewire": "^2.12",
         "pbmedia/laravel-ffmpeg": "^8.3",
         "php-ffmpeg/php-ffmpeg": "^1.1",
+        "realrashid/sweet-alert": "^7.0",
         "santigarcor/laratrust": "^8.2",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "webpatser/laravel-countries": "^1.5"
     },
     "require-dev": {
