@@ -74,9 +74,13 @@
                                     <livewire:count-subscribers :channelId="$channel->id" />
                                 </div>
                             </div>
-
-                            @if (Auth::user() && $myChannel->id != $channel->id)
-                                <livewire:subscriber :channelId="$channel->id" />
+                            @if (Auth::user())
+                                @php
+                                    $myChannel = \App\Models\Channel::where('user_id', Auth::user()->id)->first();
+                                @endphp
+                                @if ($myChannel->id != $channel->id)
+                                    <livewire:subscriber :channelId="$channel->id" />
+                                @endif
                             @endif
                         </div>
 

@@ -82,13 +82,11 @@ class VideoController extends Controller
         $url = route('coins.create', ['v' => $video->id, 'c' => $channel->id]);
         $qrCode = QrCode::size(150)->generate($url);
 
-        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
-
         if ($video) {
             $video->refresh(); // Retrieve the latest data from the database
             $video->increment('views');
 
-            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'qrCode', 'url', 'myChannel'));
+            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'qrCode', 'url'));
         } else {
             // Handle the case when the video is not found
             dd("not found");
