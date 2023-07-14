@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center gap-2 w-75">
-        <form class="w-100" action="{{ route('send-coin.store') }}" method="POST">
+        <form class="w-100" action="{{ route('coins.store') }}" method="POST">
             @csrf
             <input type="hidden" value="{{ $videoId }}" name="videoId">
             <input type="hidden" value="{{ $channelId }}" name="channelId">

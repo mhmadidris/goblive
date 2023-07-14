@@ -7,6 +7,7 @@ use App\Models\Coin;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Monarobase\CountryList\CountryList;
 
 class CoinController extends Controller
 {
@@ -15,7 +16,13 @@ class CoinController extends Controller
      */
     public function index()
     {
-        //
+        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
+
+        $countryList = new CountryList();
+        $countries = $countryList->getList();
+        // $myVideo = Video::where('channel_id', $myChannel->id)->orderBy('created_at', 'DESC')->get();
+
+        return view('pages.channel.my-history')->with('myChannel', $myChannel)->with('countries', $countries);
     }
 
     /**
@@ -44,6 +51,7 @@ class CoinController extends Controller
             'from_channel_id' => $fromChannel->id,
             'to_channel_id' => $request->channelId,
             'video_id' => $request->videoId,
+            'user_id' => Auth::user()->id,
             'coin' => $request->rangeCoins,
             'pesan' => $request->pesan ?? null
         ]);

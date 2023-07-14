@@ -79,7 +79,7 @@ class VideoController extends Controller
             ->inRandomOrder()
             ->get();
 
-        $url = route('send-coin.create', ['v' => $video->id, 'c' => $channel->id]);
+        $url = route('coins.create', ['v' => $video->id, 'c' => $channel->id]);
         $qrCode = QrCode::size(150)->generate($url);
 
         if ($video) {

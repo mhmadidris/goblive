@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('to_channel_id')->references('id')->on('channels')->onDelete('cascade');
             $table->unsignedBigInteger('video_id');
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('coin')->default(0);
             $table->text('pesan')->nullable();
             $table->timestamps();

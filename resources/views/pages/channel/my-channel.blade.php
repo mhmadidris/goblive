@@ -37,125 +37,90 @@
         }
 
         /* .bg-modal {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    background: linear-gradient(60deg, #29323c 0%, #485563 100%);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    background: linear-gradient(60deg, #29323c 0%, #485563 100%);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+
+        .nav-channel-active {
+            padding-bottom: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 5px solid white;
+        }
     </style>
 
-    <header>
-        @if (\App\Models\Channel::where('user_id', Auth::user()->id)->value('header') == null)
-            <img class="img-fluid w-100" src="{{ asset('images/header-bg.jpg') }}" alt="Thumbnail"
-                style="height: 35vh; object-fit: cover;">
-        @else
-            <img class="img-fluid w-100"
-                src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('header')) }}"
-                alt="Thumbnail" style="height: 35vh; object-fit: cover;">
-        @endif
-        <div class="container d-flex flex-row justify-content-between align-items-center my-4">
-            <div class="d-flex flex-row align-items-center gap-4">
-                <img class="rounded-circle shadow"
-                    src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('avatar')) }}"
-                    alt="avatar" style="width: 100px; height: 100px; object-fit: cover; border: 2px solid white">
-                <div class="d-flex flex-column">
-                    <h2 class="fw-bold m-0">{{ Auth::user()->name }}</h2>
-                    <h6 class="text-gray-300">{{ '@' . $myChannel->username }}</h6>
-                    {{-- <h6 class="fw-semibold m-0">{{ number_format($videos->sum('views'), 0, '.', ',') }} views</h6> --}}
-                    @if ($myChannel->bio != null)
-                        <p class="m-0">{{ $myChannel->bio }}</p>
-                    @else
-                        <p class="m-0">-</p>
-                    @endif
-                </div>
-            </div>
-            <div class="d-flex flex-row gap-2">
-                <a href="{{ route('mychannel.video.create') }}"
-                    class="btn d-flex flex-row align-items-center gap-2 bg-btn-color">
-                    <i class="fas fa-plus"></i>
-                    <span>Upload new video</span>
-                </a>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#editProfile" class="btn bg-btn-color">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </div>
-        </div>
-        <hr class="hr" />
-        <div class="container" style="height: 150vh;">
-            <livewire:my-video :myChannel="$myChannel" />
-        </div>
-    </header>
+    @include('pages.channel.information-channel')
 
-    <!-- Modal Edit Profile -->
-    <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-modal text-black">
-                <form action="{{ route('mychannel.update', $myChannel->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editProfileLabel">Edit Channel</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="header" class="form-label fw-semibold m-0">Header</label>
-                            <div id="headerPreview">
-                                @if (\App\Models\Channel::where('user_id', Auth::user()->id)->value('header') == null)
-                                    <img class="rounded w-100 my-2 shadow-sm" src="{{ asset('images/header-bg.jpg') }}"
-                                        style="height: 10rem; object-fit: cover;">
-                                @else
-                                    <img class="rounded w-100 my-2 shadow-sm"
-                                        src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('header')) }}"
-                                        style="height: 10rem; object-fit: cover;">
-                                @endif
+    <div style="height: 150vh;">
+        {{-- Start Latest Videos --}}
+        <div class="container d-flex flex-column mt-4">
+            <div class="d-flex flex-row justify-content-between align-content-center align-items-center text-white mb-3">
+                <h4 class="fw-bold">Latest Upload</h4>
+                {{-- <a href="{{ route('video.index') }}" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
+            style="background-color: #353839;">
+            See all
+        </a> --}}
+            </div>
+            <div class="owl-carousel owl-theme">
+                @foreach ($latestUpload as $itemLatest)
+                    <div class="item d-flex flex-column text-white">
+                        <div class="position-relative">
+                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                style="background-color: #353839;">
+                                <small>{{ $itemLatest->duration }}</small>
                             </div>
-                            <input type="file" class="form-control" id="header" name="header" accept="image/*"
-                                onchange="previewHeader(event)">
+                            <img src="{{ asset('storage/' . $itemLatest->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="width: 100%; height: 10rem; object-fit: cover;">
                         </div>
-
-                        <div class="mb-3">
-                            <div class="d-flex flex-column">
-                                <label for="avatar" class="form-label fw-semibold m-0">Avatar</label>
-                                <div class="text-center" id="avatarPreview">
-                                    <img class="rounded-circle my-2 shadow-sm"
-                                        src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('avatar')) }}"
-                                        style="width: 10rem; height: 10rem; object-fit: cover;">
-                                </div>
-                            </div>
-                            <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*"
-                                onchange="previewAvatar(event)">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                value="{{ Auth::user()->name }}" placeholder="cth: John Smith">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email"
-                                value="{{ Auth::user()->email }}" disabled placeholder="cth: john@email.com">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ $myChannel->username }}" placeholder="@admin">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bio" class="form-label">Bio</label>
-                            <textarea class="form-control" id="bioForm" rows="4" style="resize: none;" name="bio"
-                                placeholder="cth: Professional games streamer...">{{ $myChannel->bio }}</textarea>
+                        <a href="{{ route('video.show', $itemLatest->url) }}" class="nav-link">
+                            <h5 class="fw-bold mt-2">{{ ucfirst($itemLatest->title) }}</h5>
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $itemLatest->user_id)->value('avatar')) }}"
+                                class="rounded-circle" style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ $itemLatest->channel_name }}</h6>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
+                @endforeach
             </div>
         </div>
+        {{-- End Latest Videos --}}
+
+        {{-- Start Popular Videos --}}
+        <div class="container d-flex flex-column mt-4">
+            <div class="d-flex flex-row justify-content-between align-content-center align-items-center text-white mb-3">
+                <h4 class="fw-bold">Popular Videos</h4>
+                {{-- <a href="{{ route('video.index') }}" class="btn btn-sm rounded-pill px-4 fw-semibold text-white"
+            style="background-color: #353839;">
+            See all
+        </a> --}}
+            </div>
+            <div class="owl-carousel owl-theme">
+                @foreach ($popularVideos as $itemLatest)
+                    <div class="item d-flex flex-column text-white">
+                        <div class="position-relative">
+                            <div class="px-2 py-1 position-absolute bottom-0 start-0 m-2 text-white rounded-pill"
+                                style="background-color: #353839;">
+                                <small>{{ $itemLatest->duration }}</small>
+                            </div>
+                            <img src="{{ asset('storage/' . $itemLatest->thumbnail) }}" alt="Thumbnail" class="rounded"
+                                style="width: 100%; height: 10rem; object-fit: cover;">
+                        </div>
+                        <a href="{{ route('video.show', $itemLatest->url) }}" class="nav-link">
+                            <h5 class="fw-bold mt-2">{{ ucfirst($itemLatest->title) }}</h5>
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', $itemLatest->user_id)->value('avatar')) }}"
+                                class="rounded-circle" style="width: 25px;" alt="Avatar" />
+                            <h6 class="m-0 fw-semibold">{{ $itemLatest->channel_name }}</h6>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        {{-- End Popular Videos --}}
     </div>
+
+    @include('pages.channel.modal-edit-channel')
 
     <script>
         function confirmDelete(event) {

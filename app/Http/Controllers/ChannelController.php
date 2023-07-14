@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
+use Monarobase\CountryList\CountryList;
 
 class ChannelController extends Controller
 {
@@ -19,9 +20,32 @@ class ChannelController extends Controller
     public function index()
     {
         $myChannel = Channel::where('user_id', Auth::user()->id)->first();
-        // $myVideo = Video::where('channel_id', $myChannel->id)->orderBy('created_at', 'DESC')->get();
 
-        return view('pages.channel.my-channel')->with('myChannel', $myChannel);
+        $countryList = new CountryList();
+        $countries = $countryList->getList();
+
+        $latestUpload = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
+            ->where('videos.visibility', 'Public')
+            ->where('videos.channel_id', $myChannel->id)
+            ->orderBy('videos.created_at', 'ASC')
+            ->take(6)
+            ->get();
+
+        $popularVideos = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
+            ->where('videos.visibility', 'Public')
+            ->where('videos.channel_id', $myChannel->id)
+            ->orderBy('videos.views', 'ASC')
+            ->take(6)
+            ->get();
+
+        return view('pages.channel.my-channel')->with('myChannel', $myChannel)
+            ->with('latestUpload', $latestUpload)
+            ->with('popularVideos', $popularVideos)
+            ->with('countries', $countries);
     }
 
     /**
@@ -75,6 +99,7 @@ class ChannelController extends Controller
                 Rule::unique('channels')->ignore($channel->id),
             ],
             'bio' => 'nullable|string',
+            'lokasi' => 'nullable|string',
             'header' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -85,6 +110,10 @@ class ChannelController extends Controller
         // Check if the bio field is not null before updating
         if ($validatedData['bio'] !== null) {
             $channel->bio = $validatedData['bio'];
+        }
+
+        if ($validatedData['lokasi'] !== null) {
+            $channel->lokasi = $validatedData['lokasi'];
         }
 
         // Handle the header file
@@ -129,5 +158,36 @@ class ChannelController extends Controller
     public function destroy(Channel $channel)
     {
         //
+    }
+
+    public function myVideos(Request $request)
+    {
+        $category = $request->input('category');
+
+        $countryList = new CountryList();
+        $countries = $countryList->getList();
+
+        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
+
+        return view('pages.channel.my-video', compact('category', 'myChannel', 'countries'));
+    }
+
+
+    public function myAbout()
+    {
+        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
+
+        $countryList = new CountryList();
+        $countries = $countryList->getList();
+
+        $countViews = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
+            ->where('videos.channel_id', $myChannel->id)
+            ->get();
+
+        $viewCount = $countViews->sum('views');
+
+        return view('pages.channel.my-about', compact('myChannel', 'viewCount', 'countries'));
     }
 }

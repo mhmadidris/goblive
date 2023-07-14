@@ -31,7 +31,8 @@ Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livest
 
 Route::resource('/video', VideoController::class);
 
-Route::resource('/video/send-coin', CoinController::class);
+Route::post('send-coin', [CoinController::class, 'store'])->name('coins.store');
+Route::get('send-coin', [CoinController::class, 'create'])->name('coins.create');
 
 Route::get('channel/{username}', [ChannelController::class, 'show'])->name('channel.show');
 
@@ -43,6 +44,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::name('mychannel.')->prefix('mychannel')->group(function () {
         Route::resource('/', ChannelController::class)->except(['update']);
         Route::put('/{id}', [ChannelController::class, 'update'])->name('update');
+
+        Route::get('/history', [CoinController::class, 'index'])->name('coins.index');
+
+        Route::get('/videos', [ChannelController::class, 'myVideos'])->name('myVideos');
+
+        Route::get('/about', [ChannelController::class, 'myAbout'])->name('myAbout');
 
         Route::resource('video', VideoController::class);
         // Route::get('/video/{url}', [VideoController::class, 'show'])->name('video.show');

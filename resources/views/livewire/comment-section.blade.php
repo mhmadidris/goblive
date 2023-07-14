@@ -13,7 +13,7 @@
                                     <h6 class="fw-bold">{{ $comment->name }}</h6>
                                 </a>
                                 <h6 class="text-white fw-medium">
-                                    {{ $comment->created_at->diffForHumans(null, true) }} yang lalu</h6>
+                                    {{ $comment->created_at->diffForHumans() }}</h6>
                             </div>
                             <p>{{ $comment->comment }}</p>
                         </div>

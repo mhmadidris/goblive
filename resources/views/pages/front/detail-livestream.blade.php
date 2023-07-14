@@ -36,8 +36,7 @@
                             <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
                                 <i class="fas fa-clock"></i>
                                 <span title="{{ $livestream->snippet->publishedAt }}">
-                                    {{ \Carbon\Carbon::parse($livestream->snippet->publishedAt)->diffForHumans(null, true) }}
-                                    ago
+                                    {{ \Carbon\Carbon::parse($livestream->snippet->publishedAt)->diffForHumans() }}
                                 </span>
                             </div>
 

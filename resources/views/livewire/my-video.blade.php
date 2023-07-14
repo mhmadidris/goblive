@@ -53,7 +53,7 @@
             </div>
         @endforeach
 
-        <div class="d-flex flex-row justify-content-end">
+        <div class="d-flex flex-row justify-content-end mt-2">
             {{ $videos->links('livewire.pagination') }}
         </div>
     </div>
