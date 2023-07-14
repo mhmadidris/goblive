@@ -4,7 +4,7 @@
             <img class="img-fluid w-100" src="{{ asset('images/header-bg.jpg') }}" alt="Thumbnail"
                 style="height: 35vh; object-fit: cover;">
             <div class="position-absolute bottom-0 end-0 mx-4 my-2 p-2 btn-color rounded d-flex flex-row justify-content-center align-items-center align-content-center gap-2 shadow"
-                style="color: #f3c70d;">
+                style="color: #FCD411;">
                 <i class="fas fa-coins"></i>
                 <h5 class="fw-bold m-0">{{ number_format($myChannel->coin) }} Coins</h5>
             </div>

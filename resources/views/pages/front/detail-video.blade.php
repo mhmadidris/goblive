@@ -75,7 +75,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user())
+                            @if (Auth::user() && $myChannel->id != $channel->id)
                                 <livewire:subscriber :channelId="$channel->id" />
                             @endif
                         </div>

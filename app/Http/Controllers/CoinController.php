@@ -35,7 +35,11 @@ class CoinController extends Controller
 
         $myChannel = Channel::where('user_id', Auth::user()->id)->first();
 
-        return view('pages.front.send-coin', compact(['videoId', 'channelId', 'myChannel']));
+        if ($channelId != $myChannel->id) {
+            return view('pages.front.send-coin', compact(['videoId', 'channelId', 'myChannel']));
+        } else {
+            return abort(404);
+        }
     }
 
     /**

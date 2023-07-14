@@ -1,3 +1,3 @@
 <div>
-    <p class="fw-semibold p-0 m-0"><small>{{ $countSubs }} Subscribers</small></p>
+    <h6 class="fw-semibold p-0 m-0">{{ $countSubs }} Subscribers</h6>
 </div>

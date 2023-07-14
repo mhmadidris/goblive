@@ -189,9 +189,9 @@
                                         $myChannel = App\Models\Channel::find(Auth::user()->id);
                                     @endphp
                                     <div class="dropdown-item-text d-flex flex-row justify-content-center align-items-center align-content-center gap-2"
-                                        style="color: #f3c70d;">
+                                        style="color: #FCD411;">
                                         <i class="fas fa-coins"></i>
-                                        <span class="fw-bold">{{ number_format($myChannel->coin) }}</span>
+                                        <span class="fw-bold">{{ number_format($myChannel->coin) }} Coins</span>
                                     </div>
 
                                     <hr class="hr text-white" />
