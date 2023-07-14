@@ -27,7 +27,7 @@
             <div class="d-flex flex-column">
                 <h2 class="fw-bold m-0">{{ Auth::user()->name }}</h2>
                 <h6 class="text-gray-300">{{ '@' . $myChannel->username }}</h6>
-                {{-- <h6 class="fw-semibold m-0">{{ number_format($videos->sum('views'), 0, '.', ',') }} views</h6> --}}
+                <livewire:count-subscribers :channelId="$myChannel->id" />
             </div>
         </div>
         <div class="d-flex flex-row gap-2">

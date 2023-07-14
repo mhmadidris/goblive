@@ -42,13 +42,13 @@
                     <div class="mb-3">
                         <label for="name" class="form-label fw-semibold m-0">Name</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            value="{{ Auth::user()->name }}" placeholder="cth: John Smith">
+                            value="{{ Auth::user()->name }}" placeholder="ex: John Smith">
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label fw-semibold m-0">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ Auth::user()->email }}" disabled placeholder="cth: john@email.com">
+                            value="{{ Auth::user()->email }}" disabled placeholder="ex: john@email.com">
                     </div>
 
                     <div class="mb-3">
@@ -71,7 +71,7 @@
                     <div class="mb-3">
                         <label for="bio" class="form-label fw-semibold m-0">Bio</label>
                         <textarea class="form-control" id="bioForm" rows="4" style="resize: none;" name="bio"
-                            placeholder="cth: Professional games streamer...">{{ $myChannel->bio }}</textarea>
+                            placeholder="ex: Professional games streamer...">{{ $myChannel->bio }}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

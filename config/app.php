@@ -161,6 +161,7 @@ return [
          */
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Monarobase\CountryList\CountryListServiceProvider::class,
+        Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
 
         /*
          * Application Service Providers...

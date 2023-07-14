@@ -5,13 +5,16 @@
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row gap-3">
                         <img class="rounded shadow-sm" src="{{ asset('storage/' . $item->thumbnail) }}" alt=""
-                            style="width: 7.5rem; height: 5rem; object-fit: cover;">
+                            style="width: 7.5rem; height: 6rem; object-fit: cover;">
                         <div class="d-flex flex-column gap-1">
                             <h3 class="fw-bold">{{ $item->title }}</h3>
                             <div class="d-flex align-items-center align-content-center gap-1">
                                 <i class="fas fa-hashtag"></i>
                                 <span class="fw-semibold">{{ $item->category }}</span>
                             </div>
+                            @if ($item->pesan != null)
+                                <span class="fw-semibold">{{ $item->pesan }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="d-flex flex-column justify-content-between align-items-end">

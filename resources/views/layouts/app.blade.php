@@ -37,11 +37,6 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-    {{-- SweetAlert --}}
-    <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
-    <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
-
-
     @livewireStyles
 
     <style>
@@ -250,7 +245,23 @@
         });
     </script>
 
+    @if (session()->has('toast'))
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-header">
+                <strong class="me-auto">{{ session('toast')['type'] }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('toast')['message'] }}
+            </div>
+        </div>
+    @endif
+
+
     @livewireScripts
+
+    <x-notify::notify />
+    @notifyJs
 </body>
 
 </html>

@@ -71,18 +71,13 @@
                                     <a href="{{ route('channel.show', $channel->username) }}" class="nav-link">
                                         <h6 class="fw-bold">{{ ucfirst($channel->name) }}</h6>
                                     </a>
-                                    <p class="fw-medium p-0 m-0"><small>123 Subscribers</small></p>
+                                    <livewire:count-subscribers :channelId="$channel->id" />
                                 </div>
                             </div>
-                            {{-- <div>
-                                @if (Auth::user())
-                                    @if ($video->user_id != Auth::user()->id)
-                                        <button type="button" class="btn btn-sm btn-primary rounded">Subscribe</button>
-                                    @else
-                                        <a href="" class="btn btn-sm btn-secondary rounded">Edit Video</a>
-                                    @endif
-                                @endif
-                            </div> --}}
+
+                            @if (Auth::user())
+                                <livewire:subscriber :channelId="$channel->id" />
+                            @endif
                         </div>
 
                         @if ($video->description != null)

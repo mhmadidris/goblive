@@ -67,7 +67,7 @@
             <div class="modal-body">
                 <div class="d-flex flex-column justify-content-center align-items-center align-content-center">
                     <div>
-                        <div class="card d-inline-block p-2 shadow">
+                        <div class="card d-inline-block p-2 shadow" title="Scan Here">
                             {!! $qrCode !!}
                         </div>
                     </div>
