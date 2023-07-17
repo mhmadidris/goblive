@@ -37,6 +37,15 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    <style>
+        body {
+            font-family: 'Raleway';
+            background: rgb(2, 0, 36);
+            background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(0, 49, 52, 1) 100%);
+        }
+    </style>
+
+    @livewireStyles
 </head>
 
 <body>
@@ -71,6 +80,8 @@
             items: 8,
         });
     </script>
+
+    @livewireScripts
 </body>
 
 </html>

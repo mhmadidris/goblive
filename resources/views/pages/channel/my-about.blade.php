@@ -37,8 +37,8 @@
         }
 
         /* .bg-modal {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    background: linear-gradient(60deg, #29323c 0%, #485563 100%);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                background: linear-gradient(60deg, #29323c 0%, #485563 100%);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
 
         .nav-channel-active {
             padding-bottom: 5px;
@@ -50,8 +50,9 @@
 
     @include('pages.channel.information-channel')
 
-    <div class="container d-flex flex-row justify-content-around mt-4" style="height: 150vh;">
-        <div class="w-75">
+    <div class="container d-flex flex-column-reverse flex-md-row justify-content-md-arround justify-content-end mt-4"
+        style="height: 150vh;">
+        <div class="col-12 col-md-8">
             <h5 class="fw-bold">Description</h5>
             @if ($myChannel->bio != null)
                 <p class="text-justify">{{ $myChannel->bio }}</p>
@@ -59,7 +60,7 @@
                 <p class="text-center">No description info</p>
             @endif
         </div>
-        <div class="w-25 d-flex flex-column">
+        <div class="col-12 col-md-4 d-flex flex-column">
             <div class="d-flex align-items-center gap-2">
                 <i class="fas fa-map-marker-alt"></i>
                 @if ($myChannel->lokasi != null)

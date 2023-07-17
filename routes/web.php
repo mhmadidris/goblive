@@ -31,10 +31,14 @@ Route::get('/livestream/{id}', [YoutubeController::class, 'show'])->name('livest
 
 Route::resource('/video', VideoController::class);
 
-Route::post('send-coin', [CoinController::class, 'store'])->name('coins.store');
 Route::get('send-coin', [CoinController::class, 'create'])->name('coins.create');
+Route::post('send-coin', [CoinController::class, 'store'])->name('coins.store');
+Route::get('topup-coin', [CoinController::class, 'topupCoinView'])->name('coins.topupCoinView');
+Route::post('topup-coin/store', [CoinController::class, 'topupCoin'])->name('coins.topupCoin');
 
 Route::get('channel/{username}', [ChannelController::class, 'show'])->name('channel.show');
+Route::get('channel/{username}/videos', [ChannelController::class, 'channelVideos'])->name('channel.channelVideos');
+Route::get('channel/{username}/about', [ChannelController::class, 'channelAbout'])->name('channel.channelAbout');
 
 Route::get('/about', function () {
     return view('pages.front.about');

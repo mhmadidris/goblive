@@ -2,7 +2,7 @@
     <div class="d-flex flex-column-reverse">
         <div class="d-flex flex-column align-items-center gap-2" id="commentContainer" wire:poll.0000ms="refreshComments">
             <!-- Existing comments -->
-            @if (!empty($comments))
+            @if (count($comments) > 0)
                 @foreach ($comments as $comment)
                     <div class="d-flex flex-row gap-2 w-100" id="comment-{{ $comment->id }}">
                         <img src="{{ asset('storage/' . $comment->channel_avatar) }}" alt="Avatar" class="rounded-circle"
@@ -12,7 +12,7 @@
                                 <a href="{{ route('channel.show', $comment->username) }}" class="nav-link">
                                     <h6 class="fw-bold">{{ $comment->name }}</h6>
                                 </a>
-                                <h6 class="text-white fw-medium">
+                                <h6 class="text-white fw-medium" title="{{ $comment->created_at }}">
                                     {{ $comment->created_at->diffForHumans() }}</h6>
                             </div>
                             <p>{{ $comment->comment }}</p>

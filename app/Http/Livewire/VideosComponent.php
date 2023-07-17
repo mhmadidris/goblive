@@ -32,7 +32,7 @@ class VideosComponent extends Component
             $query->inRandomOrder();
         }
 
-        $videos = $query->paginate(8);
+        $videos = $query->paginate(12);
 
         $videos->appends([
             'category' => $this->category,

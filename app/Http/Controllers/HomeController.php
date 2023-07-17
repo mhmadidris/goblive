@@ -30,8 +30,9 @@ class HomeController extends Controller
             'eventType' => 'live',
             'type' => 'video',
             'videoCategoryId' => '20',
-            'maxResults' => 1,
+            'maxResults' => 6,
             'regionCode' => 'US',
+            'order' => 'viewCount', // Sort by view counts
         ];
 
         // Call the API to fetch the livestreams data
@@ -39,13 +40,15 @@ class HomeController extends Controller
 
         $livestreams = $response->getItems();
 
-        // Retrieve the channel details and channel avatar
+        // Retrieve the channel details, including the subscribers count
         $channelAvatars = [];
+        $subscribersCount = [];
         foreach ($livestreams as $livestream) {
             $channelId = $livestream->snippet->channelId;
-            $channel = $youtube->channels->listChannels('snippet', ['id' => $channelId]);
+            $channel = $youtube->channels->listChannels('snippet,statistics', ['id' => $channelId]);
             $channelAvatar = $channel->getItems()[0]->snippet->thumbnails->default->getUrl();
             $channelAvatars[$channelId] = $channelAvatar;
+            $subscribersCount[$channelId] = $channel->getItems()[0]->statistics->subscriberCount;
         }
 
         // Fetch other video categories
@@ -84,6 +87,6 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        return view('pages.front.home', compact('latestVideos', 'mobileVideos', 'consoleVideos', 'pcVideos', 'livestreams', 'channelAvatars'));
+        return view('pages.front.home', compact('latestVideos', 'mobileVideos', 'consoleVideos', 'pcVideos', 'channelAvatars', 'livestreams', 'subscribersCount'));
     }
 }

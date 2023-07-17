@@ -13,7 +13,7 @@
                                 <span class="fw-semibold">{{ $item->category }}</span>
                             </div>
                             @if ($item->pesan != null)
-                                <span class="fw-semibold">{{ $item->pesan }}</span>
+                                <p class="fw-semibold m-0">{{ $item->pesan }}</p>
                             @endif
                         </div>
                     </div>

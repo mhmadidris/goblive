@@ -34,15 +34,22 @@ class YoutubeController extends Controller
 
         // Retrieve the channel details and channel avatar
         $channelAvatars = [];
+        $subscribersCount = [];
         foreach ($livestreams as $livestream) {
             $channelId = $livestream->snippet->channelId;
-            $channel = $youtube->channels->listChannels('snippet', ['id' => $channelId]);
-            $channelAvatar = $channel->getItems()[0]->snippet->thumbnails->default->getUrl();
-            $channelAvatars[$channelId] = $channelAvatar;
+            $channel = $youtube->channels->listChannels('snippet, statistics', ['id' => $channelId]);
+            $channelItems = $channel->getItems();
+
+            if (!empty($channelItems)) {
+                $channelAvatar = $channelItems[0]->snippet->thumbnails->default->getUrl();
+                $channelAvatars[$channelId] = $channelAvatar;
+                $subscribersCount[$channelId] = $channelItems[0]->statistics->subscriberCount;
+            }
         }
 
+
         // Do something with the livestreams and channel details, such as passing them to a view
-        return view('pages.front.livestream', compact('livestreams', 'channelAvatars'));
+        return view('pages.front.livestream', compact('livestreams', 'channelAvatars', 'subscribersCount'));
     }
 
     public function show($videoId)

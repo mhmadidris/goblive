@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Coin;
+use App\Models\Paket;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Monarobase\CountryList\CountryList;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CoinController extends Controller
 {
@@ -68,8 +70,11 @@ class CoinController extends Controller
             $destinationChannel->coin += $request->rangeCoins;
             $destinationChannel->save();
 
-            alert()->success('Success Title', 'Success Message');
+            Alert::success('Send coin successfully!');
             return redirect()->route('video.show', $video->url);
+        } else {
+            Alert::error('Send coin failed!');
+            return redirect()->back();
         }
     }
 
@@ -103,5 +108,36 @@ class CoinController extends Controller
     public function destroy(Coin $coin)
     {
         //
+    }
+
+    public function topupCoinView(Request $request)
+    {
+        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
+
+        $paket = Paket::orderBy('coin', 'ASC')->get();
+
+        return view('pages.channel.topup-coin', compact('myChannel', 'paket'));
+    }
+
+    public function topupCoin(Request $request)
+    {
+        $paketSelectedCoin = Paket::where('id', $request->idPaket)->value('coin');
+
+        $topupCoin = Channel::find(Auth::user()->id);
+        $topupCoin->coin += $paketSelectedCoin;
+
+        if ($topupCoin->save()) {
+            $paketCount = Paket::find($request->idPaket);
+            $paketCount->total_buyer += 1;
+            $paketCount->save();
+
+            Alert::toast('Topup Coin Successfully!', 'success', ['icon' => 'success']);
+
+            return redirect()->route('mychannel.index');
+        } else {
+            Alert::toast('Topup Coin Failed!', 'error', ['icon' => 'error']);
+
+            return redirect()->back();
+        }
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use Monarobase\CountryList\CountryList;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ChannelController extends Controller
 {
@@ -71,7 +72,25 @@ class ChannelController extends Controller
     {
         $channel = Channel::join('users', 'users.id', 'channels.user_id')->where('channels.username', $username)->first();
 
-        return view('pages.front.detail-channel', compact('channel'));
+        $latestUpload = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
+            ->where('videos.visibility', 'Public')
+            ->where('videos.channel_id', $channel->id)
+            ->orderBy('videos.created_at', 'ASC')
+            ->take(6)
+            ->get();
+
+        $popularVideos = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
+            ->where('videos.visibility', 'Public')
+            ->where('videos.channel_id', $channel->id)
+            ->orderBy('videos.views', 'ASC')
+            ->take(6)
+            ->get();
+
+        return view('pages.front.channel.detail-channel', compact('channel', 'latestUpload', 'popularVideos'));
     }
 
     /**
@@ -148,6 +167,8 @@ class ChannelController extends Controller
         // Save the updated user
         $user->save();
 
+        Alert::toast('Update channel successfully!', 'success', ['icon' => 'success']);
+
         // Redirect or return a response
         return redirect()->back()->with('success', 'Channel and user updated successfully.');
     }
@@ -189,5 +210,29 @@ class ChannelController extends Controller
         $viewCount = $countViews->sum('views');
 
         return view('pages.channel.my-about', compact('myChannel', 'viewCount', 'countries'));
+    }
+
+    public function channelVideos(Request $request, $username)
+    {
+        $category = $request->input('category');
+
+        $channel = Channel::join('users', 'users.id', 'channels.user_id')->where('channels.username', $username)->first();
+
+        return view('pages.front.channel.detail-video', compact('category', 'channel'));
+    }
+
+    public function channelAbout($username)
+    {
+        $channel = Channel::join('users', 'users.id', 'channels.user_id')->where('channels.username', $username)->first();
+
+        $countViews = Video::join('channels', 'channels.id', 'videos.channel_id')
+            ->join('users', 'users.id', 'channels.user_id')
+            ->select('videos.*', 'users.name as channel_name', 'channels.*')
+            ->where('videos.channel_id', $channel->id)
+            ->get();
+
+        $viewCount = $countViews->sum('views');
+
+        return view('pages.front.channel.detail-about', compact('channel', 'viewCount'));
     }
 }

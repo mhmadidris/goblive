@@ -95,28 +95,24 @@
             }
         });
     </script>
+
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light">
+        <nav class="navbar navbar-expand-md text-white">
             <div class="container">
                 <a class="navbar-brand text-white fw-bold" href="{{ url('/') }}"
                     style="font-family: Black Ops One; font-size: 1.5rem;">
                     {{ config('app.name') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="d-md-none d-block" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
+                    <i class="fas fa-bars fa-lg"></i>
+                </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
                     <!-- Center of Navbar -->
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item {{ Request::is('/') ? 'fw-bolder' : '' }} h5 mx-1">
@@ -138,33 +134,25 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <div class="d-flex flex-row gap-3">
-                                @if (Route::has('login'))
-                                    <li class="nav-item">
-                                        <a class="nav-link text-black btn btn-size fw-bold" href="{{ route('login') }}"
-                                            style="background-color: white; font-size: 0.85rem; border: 2px solid transparent;">{{ __('LOGIN') }}</a>
-                                    </li>
-                                @endif
+                            <div class="d-flex mb-md-0 mb-2">
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-black btn btn-size fw-bold" href="{{ route('login') }}"
+                                        style="background-color: white; font-size: 0.85rem; border: 2px solid transparent;">{{ __('LOGIN') }}</a>
+                                </li>
 
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white btn btn-size fw-bold" href="{{ route('register') }}"
-                                            style="border: 2px solid white; font-size: 0.85rem;">{{ __('REGISTER') }}</a>
-                                    </li>
-                                @endif
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-white btn btn-size fw-bold" href="{{ route('register') }}"
+                                        style="border: 2px solid white; font-size: 0.85rem;">{{ __('REGISTER') }}</a>
+                                </li>
                             </div>
                         @else
-                            {{-- <li class="nav-item dropdown d-flex align-items-center justify-content-center mx-2">
-                                <a href="" class="nav-link text-white">
-                                    <i class="fas fa-bell fa-lg"></i>
-                                </a>
-                            </li> --}}
-
+                            <!-- Dropdown Menu -->
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white d-flex" href="#"
-                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    v-pre>
-                                    <div class="d-flex flex-column align-items-end">
+                                <a id="navbarDropdown"
+                                    class="nav-link dropdown-toggle text-white d-flex flex-row-reverse flex-md-row"
+                                    href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" v-pre>
+                                    <div class="d-flex flex-column align-items-start align-items-md-end">
                                         <span class="fw-bold">{{ Auth::user()->name }}</span>
                                         <small class="fw-medium">{{ Auth::user()->email }}</small>
                                     </div>
@@ -175,37 +163,31 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" style="background-color: #353839;"
                                     aria-labelledby="navbarDropdown">
-                                    {{-- <div
-                                        class="dropdown-item-text text-white d-flex flex-row justify-content-center align-items-center">
-                                        <img src="{{ asset('storage/' . \App\Models\Channel::where('user_id', Auth::user()->id)->value('avatar')) }}"
-                                            alt="Avatar" class="rounded-circle mx-2" style="width: 30px; height: 30px;">
-                                        <div class="d-flex flex-column">
-                                            <small class="fw-bold">{{ $channel->name }}</small>
-                                            <small>{{ $channel->email }}</small>
-                                        </div>
-                                    </div> --}}
-
+                                    <!-- Dropdown Item -->
                                     @php
-                                        $myChannel = App\Models\Channel::find(Auth::user()->id);
+                                        $myChannel = App\Models\Channel::where('user_id', Auth::user()->id)->first();
                                     @endphp
-                                    <div class="dropdown-item-text d-flex flex-row justify-content-center align-items-center align-content-center gap-2"
-                                        style="color: #FCD411;">
-                                        <i class="fas fa-coins"></i>
-                                        <span class="fw-bold">{{ number_format($myChannel->coin) }} Coins</span>
+                                    <div
+                                        class="dropdown-item-text text-white d-flex justify-content-center align-items-center gap-2">
+                                        <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                        <h6 class="fw-bold m-0" style="color: #FCD411;">
+                                            {{ number_format($myChannel->coin) }} coins</h6>
                                     </div>
 
-                                    <hr class="hr text-white" />
+                                    <hr class="text-white">
 
                                     <a class="dropdown-item text-white" href="{{ route('mychannel.index') }}">
                                         {{ __('My Channel') }}
                                     </a>
 
+                                    <!-- Logout -->
                                     <a class="dropdown-item text-white" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
+                                    <!-- Logout Form -->
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -245,23 +227,30 @@
         });
     </script>
 
-    @if (session()->has('toast'))
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
-            <div class="toast-header">
-                <strong class="me-auto">{{ session('toast')['type'] }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                {{ session('toast')['message'] }}
-            </div>
-        </div>
-    @endif
-
-
+    @include('sweetalert::alert')
     @livewireScripts
 
-    <x-notify::notify />
-    @notifyJs
+    <script>
+        window.addEventListener('showToast', function(event) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    toast.style.marginTop = '5rem';
+                }
+            });
+
+            Toast.fire({
+                icon: event.detail.type,
+                title: event.detail.message
+            });
+        });
+    </script>
 </body>
 
 </html>

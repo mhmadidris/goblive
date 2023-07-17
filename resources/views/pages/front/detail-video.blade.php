@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.addEventListener('showAlert', function(event) {
+            Swal.fire({
+                icon: event.detail.type,
+                title: event.detail.message,
+                text: event.detail.message,
+            });
+        });
+    </script>
+
     <style>
         .bg-custom {
             background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
@@ -15,10 +26,10 @@
         <div class="w-100">
             <div class="d-flex flex-row gap-4">
                 <div class="w-100 d-flex flex-column">
-                    <h2 class="fw-bold" style="text-align: justify;">{{ $video->title }}
+                    <h2 class="fw-bold" style="text-align: justify;">{{ ucfirst($video->title) }}
                     </h2>
 
-                    <div class="mt-3 d-flex justify-content-between">
+                    <div class="mt-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
                         <div class="d-flex flex-row gap-4">
                             <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
                                 <i class="fas fa-clock"></i>
@@ -45,15 +56,15 @@
                         @if (Auth::user())
                             <div>
                                 @if (Auth::user()->id != $video->channel_id)
-                                    <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
+                                    <button class="btn rounded-pill" style="background-color: #a8b8d0;"
                                         data-bs-toggle="modal" data-bs-target="#modalDonate">
                                         <i class="fas fa-donate"></i>
                                         Donate
                                     </button>
                                 @endif
 
-                                <button class="btn btn-sm rounded-pill" style="background-color: #a8b8d0;"
-                                    data-bs-toggle="modal" data-bs-target="#modalShare">
+                                <button class="btn rounded-pill" style="background-color: #a8b8d0;" data-bs-toggle="modal"
+                                    data-bs-target="#modalShare">
                                     <i class="fas fa-share"></i>
                                     Share
                                 </button>
@@ -84,15 +95,18 @@
                             @endif
                         </div>
 
-                        @if ($video->description != null)
-                            <p style="text-align: justify;">
-                                {{ $video->description }}
-                            </p>
-                        @else
-                            <p style="text-align: center;">
-                                No description info
-                            </p>
-                        @endif
+                        <div class="card card-body mb-3" style="background-color: #2d2d2d;">
+                            <h6 class="fw-bold" style="text-decoration: underline;">Description</h6>
+                            @if ($video->description != null)
+                                <p class="m-0" style="text-align: justify;">
+                                    {{ $video->description }}
+                                </p>
+                            @else
+                                <p class="m-0" style="text-align: center;">
+                                    No description info
+                                </p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

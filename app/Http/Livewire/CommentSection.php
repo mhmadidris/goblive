@@ -6,6 +6,7 @@ use App\Models\Channel;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CommentSection extends Component
 {
@@ -29,7 +30,6 @@ class CommentSection extends Component
             ->where('video_id', $this->video->id)
             ->orderBy('comments.created_at', 'DESC')
             ->get();
-        //dd($this->comments);
     }
 
     public function addComment()
@@ -46,6 +46,7 @@ class CommentSection extends Component
             'comment' => $this->comment,
         ]);
 
+        $this->showToast('success', 'Add new comment successfully!');
         $this->emit('commentAdded', $newComment->id);
 
         $this->comment = '';
@@ -54,6 +55,14 @@ class CommentSection extends Component
     public function handleCommentAdded()
     {
         $this->refreshComments();
+    }
+
+    public function showToast($type, $message)
+    {
+        $this->dispatchBrowserEvent('showToast', [
+            'type' => $type,
+            'message' => $message,
+        ]);
     }
 
     public function render()

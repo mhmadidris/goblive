@@ -31,7 +31,7 @@
                 <div class="w-100 d-flex flex-column">
                     <h2 class="fw-bold" style="text-align: justify;">{{ $livestream->snippet->title }}</h2>
 
-                    <div class="mt-3 d-flex justify-content-between">
+                    <div class="mt-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
                         <div class="d-flex flex-row gap-4">
                             <div class="d-flex flex-row align-content-center align-items-center gap-1 text-gray-800">
                                 <i class="fas fa-clock"></i>
@@ -78,20 +78,80 @@
                             </div>
                         </div>
 
-                        @if ($livestream->snippet->description != null)
-                            <p style="text-align: left;">
-                                {!! $livestream->snippet->description !!}
-                            </p>
-                        @else
-                            <p style="text-align: center;">
-                                No description info
-                            </p>
-                        @endif
+                        <div class="card card-body mb-3" style="background-color: #2d2d2d;">
+                            <h6 class="fw-bold" style="text-decoration: underline;">Description</h6>
+                            @if ($livestream->snippet->description != null)
+                                <p class="description-text" style="white-space: pre-wrap;">
+                                    {{ $livestream->snippet->description }}</p>
+                                <hr class="hr">
+                                <div class="text-center">
+                                    <div class="show-more">
+                                        <a href="#" class="text-white nav-link">Show more</a>
+                                    </div>
+                                    <div class="show-less" style="display: none;">
+                                        <a href="#" class="text-white nav-link">Show less</a>
+                                    </div>
+                                </div>
+                            @else
+                                <p style="text-align: center;">
+                                    No description info
+                                </p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.description-text').each(function() {
+                var description = $(this);
+                var descriptionHeight = description.height();
+                var lineHeight = parseInt(description.css('line-height'));
+                var trimmedText = description.text().trim();
+
+                if (descriptionHeight > 3 * lineHeight || trimmedText.length === 0) {
+                    description.addClass('collapsed');
+                    description.css('height', '3em');
+                    description.css('overflow', 'hidden');
+
+                    description.siblings('.show-more').show();
+                    description.siblings('.show-less').hide();
+                }
+            });
+
+            $('.show-more a').click(function(e) {
+                e.preventDefault();
+                var description = $(this).closest('.card-body').find('.description-text');
+
+                description.removeClass('collapsed');
+                description.css('overflow', 'hidden');
+                description.animate({
+                    height: description.prop('scrollHeight')
+                }, 400);
+
+                $(this).closest('.show-more').hide();
+                $(this).closest('.card-body').find('.show-less').show();
+            });
+
+            $('.show-less a').click(function(e) {
+                e.preventDefault();
+                var description = $(this).closest('.card-body').find('.description-text');
+
+                description.addClass('collapsed');
+                description.animate({
+                    height: '3em'
+                }, 400, function() {
+                    $(this).css('overflow', 'hidden');
+                });
+
+                $(this).closest('.show-less').hide();
+                $(this).closest('.card-body').find('.show-more').show();
+            });
+        });
+    </script>
 
     <!-- Modal Share -->
     {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -149,25 +209,3 @@
         </div>
     </div> --}}
 @endsection
-
-
-
-
-
-
-{{-- <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h2>{{ $livestream->snippet->title }}</h2>
-            <p>{{ $livestream->snippet->description }}</p>
-            <p>Channel: {{ $livestream->snippet->channelTitle }}</p>
-            <p>Published At: {{ $livestream->snippet->publishedAt }}</p>
-        </div>
-        <div class="col-md-6">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $livestream->id }}"
-                    allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</div> --}}

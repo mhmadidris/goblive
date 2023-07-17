@@ -61,6 +61,8 @@ class VideoController extends Controller
         // Store the thumbnail file in the storage disk under the 'thumbnails' directory
         $request->file('thumbnail')->store('public/thumbnails');
 
+        Alert::toast('Add new video successfully!', 'success', ['icon' => 'success']);
+
         return redirect()->route('mychannel.index');
     }
 
@@ -147,6 +149,8 @@ class VideoController extends Controller
 
         $video->save();
 
+        Alert::toast('Update video successfully!', 'success', ['icon' => 'success']);
+
         return redirect()->route('mychannel.index');
     }
 
@@ -165,6 +169,8 @@ class VideoController extends Controller
 
         // Delete the video record from the database
         $video->delete();
+
+        Alert::toast('Delete video successfully!', 'success', ['icon' => 'success']);
 
         return redirect()->back();
     }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Subscriber extends Component
 {
@@ -61,7 +62,7 @@ class Subscriber extends Component
 
     public function showToast($type, $message)
     {
-        session()->flash('toast', [
+        $this->dispatchBrowserEvent('showToast', [
             'type' => $type,
             'message' => $message,
         ]);
