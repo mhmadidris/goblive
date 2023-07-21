@@ -7,49 +7,103 @@ use Google_Service_YouTube;
 
 class YoutubeController extends Controller
 {
+    // public function getLivestreams()
+    // {
+    //     // Create a new instance of the Google_Client
+    //     $client = new Google_Client();
+    //     $client->setApplicationName('Your Application Name');
+    //     $client->setDeveloperKey(env('YOUTUBE_API_KEY')); // Replace with your own API key
+
+    //     // Create a new instance of the Google_Service_YouTube
+    //     $youtube = new Google_Service_YouTube($client);
+
+    //     // Set the parameters for the API request
+    //     $params = [
+    //         'part' => 'snippet',
+    //         'eventType' => 'live',
+    //         'type' => 'video',
+    //         'videoCategoryId' => '20',
+    //         'maxResults' => 20,
+    //         'regionCode' => 'US',
+    //     ];
+
+    //     // Call the API to fetch the livestreams data
+    //     $response = $youtube->search->listSearch('id', $params);
+
+    //     $livestreams = $response->getItems();
+
+    //     // Retrieve the channel details and channel avatar
+    //     $channelAvatars = [];
+    //     $subscribersCount = [];
+    //     foreach ($livestreams as $livestream) {
+    //         $channelId = $livestream->snippet->channelId;
+    //         $channel = $youtube->channels->listChannels('snippet, statistics', ['id' => $channelId]);
+    //         $channelItems = $channel->getItems();
+
+    //         if (!empty($channelItems)) {
+    //             $channelAvatar = $channelItems[0]->snippet->thumbnails->default->getUrl();
+    //             $channelAvatars[$channelId] = $channelAvatar;
+    //             $subscribersCount[$channelId] = $channelItems[0]->statistics->subscriberCount;
+    //         }
+    //     }
+
+
+    //     // Do something with the livestreams and channel details, such as passing them to a view
+    //     return view('pages.front.livestream', compact('livestreams', 'channelAvatars', 'subscribersCount'));
+    // }
+
     public function getLivestreams()
     {
-        // Create a new instance of the Google_Client
-        $client = new Google_Client();
-        $client->setApplicationName('Your Application Name');
-        $client->setDeveloperKey(env('YOUTUBE_API_KEY')); // Replace with your own API key
+        try {
+            // Create a new instance of the Google_Client
+            $client = new Google_Client();
+            $client->setApplicationName('Your Application Name');
+            $client->setDeveloperKey(env('YOUTUBE_API_KEY')); // Replace with your own API key
 
-        // Create a new instance of the Google_Service_YouTube
-        $youtube = new Google_Service_YouTube($client);
+            // Create a new instance of the Google_Service_YouTube
+            $youtube = new Google_Service_YouTube($client);
 
-        // Set the parameters for the API request
-        $params = [
-            'part' => 'snippet',
-            'eventType' => 'live',
-            'type' => 'video',
-            'videoCategoryId' => '20',
-            'maxResults' => 20,
-            'regionCode' => 'US',
-        ];
+            // Set the parameters for the API request
+            $params = [
+                'part' => 'snippet',
+                'eventType' => 'live',
+                'type' => 'video',
+                'videoCategoryId' => '20',
+                'maxResults' => 20,
+                'regionCode' => 'US',
+            ];
 
-        // Call the API to fetch the livestreams data
-        $response = $youtube->search->listSearch('id', $params);
+            // Call the API to fetch the livestreams data
+            $response = $youtube->search->listSearch('id', $params);
 
-        $livestreams = $response->getItems();
+            $livestreams = $response->getItems();
 
-        // Retrieve the channel details and channel avatar
-        $channelAvatars = [];
-        $subscribersCount = [];
-        foreach ($livestreams as $livestream) {
-            $channelId = $livestream->snippet->channelId;
-            $channel = $youtube->channels->listChannels('snippet, statistics', ['id' => $channelId]);
-            $channelItems = $channel->getItems();
+            // Retrieve the channel details and channel avatar
+            $channelAvatars = [];
+            $subscribersCount = [];
+            foreach ($livestreams as $livestream) {
+                $channelId = $livestream->snippet->channelId;
+                $channel = $youtube->channels->listChannels('snippet, statistics', ['id' => $channelId]);
+                $channelItems = $channel->getItems();
 
-            if (!empty($channelItems)) {
-                $channelAvatar = $channelItems[0]->snippet->thumbnails->default->getUrl();
-                $channelAvatars[$channelId] = $channelAvatar;
-                $subscribersCount[$channelId] = $channelItems[0]->statistics->subscriberCount;
+                if (!empty($channelItems)) {
+                    $channelAvatar = $channelItems[0]->snippet->thumbnails->default->getUrl();
+                    $channelAvatars[$channelId] = $channelAvatar;
+                    $subscribersCount[$channelId] = $channelItems[0]->statistics->subscriberCount;
+                }
             }
+
+            // Do something with the livestreams and channel details, such as passing them to a view
+            return view('pages.front.livestream', compact('livestreams', 'channelAvatars', 'subscribersCount'));
+        } catch (Google_Service_Exception $e) {
+            // Handle the Google_Service_Exception (YouTube API error) gracefully
+            // Log the error, notify the developer, or take other appropriate actions
+            // For now, we'll just pass an empty list to the view
+            $livestreams = [];
+            $channelAvatars = [];
+            $subscribersCount = [];
+            return view('pages.front.livestream', compact('livestreams', 'channelAvatars', 'subscribersCount'));
         }
-
-
-        // Do something with the livestreams and channel details, such as passing them to a view
-        return view('pages.front.livestream', compact('livestreams', 'channelAvatars', 'subscribersCount'));
     }
 
     public function show($videoId)
