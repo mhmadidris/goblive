@@ -9,9 +9,7 @@
                             style="width: 40px; height: 40px; border: 2px solid white;">
                         <div class="d-flex flex-column gap-1 w-100">
                             <div class="d-flex flex-row align-items-center justify-content-between">
-                                <a href="{{ route('channel.show', $comment->username) }}" class="nav-link">
-                                    <h6 class="fw-bold">{{ $comment->name }}</h6>
-                                </a>
+                                <h6 class="fw-bold">{{ $comment->name }}</h6>
                                 <h6 class="text-white fw-medium" title="{{ $comment->created_at }}">
                                     {{ $comment->created_at->diffForHumans() }}</h6>
                             </div>
@@ -39,8 +37,15 @@
 
     <script>
         document.addEventListener('livewire:load', function() {
-            Livewire.on('refreshPage', function() {
-                location.reload();
+            Livewire.on('commentAdded', function(commentId) {
+                // Scroll to the newly added comment
+                const commentElement = document.getElementById('comment-' + commentId);
+                if (commentElement) {
+                    commentElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
     </script>

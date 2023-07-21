@@ -50,9 +50,6 @@ class CommentSection extends Component
         $this->emit('commentAdded', $newComment->id);
 
         $this->comment = '';
-
-        // Use JavaScript to reload the current page after adding the comment
-        $this->dispatchBrowserEvent('refreshPage');
     }
 
     public function handleCommentAdded()
