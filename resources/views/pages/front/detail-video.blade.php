@@ -89,7 +89,7 @@
                                 @php
                                     $myChannel = \App\Models\Channel::where('user_id', Auth::user()->id)->first();
                                 @endphp
-                                @if ($myChannel->id != $channel->id)
+                                @if ($channel->id != $myChannel->id)
                                     <livewire:subscriber :channelId="$channel->id" />
                                 @endif
                             @endif
