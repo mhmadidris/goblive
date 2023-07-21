@@ -39,15 +39,8 @@
 
     <script>
         document.addEventListener('livewire:load', function() {
-            Livewire.on('commentAdded', function(commentId) {
-                // Scroll to the newly added comment
-                const commentElement = document.getElementById('comment-' + commentId);
-                if (commentElement) {
-                    commentElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+            Livewire.on('refreshPage', function() {
+                location.reload();
             });
         });
     </script>
