@@ -81,3 +81,23 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Modal Filter Coin -->
+<div class="modal fade" id="modalFilterCoin" tabindex="-1" aria-labelledby="modalFilterCoinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-custom">
+            <div class="modal-header">
+                <h4 class="modal-title m-0" id="modalFilterCoinLabel">Mohon Maaf!</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="mb-0">Koin Anda tidak mencukupi untuk melakukan donasi. Saat ini Anda memiliki <span
+                        class="fw-bold">{{ $myChannel->coin }}</span> koin.</p>
+                <a href="{{ route('coins.topupCoinView') }}" class="btn btn-primary my-3">Topup</a>
+                <p>Minimal koin untuk donasi adalah <span class="fw-bold">10</span>.</p>
+            </div>
+        </div>
+    </div>
+</div>

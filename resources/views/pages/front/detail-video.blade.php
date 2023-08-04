@@ -56,11 +56,19 @@
                         @if (Auth::user())
                             <div>
                                 @if (Auth::user()->id != $video->channel_id)
-                                    <button class="btn rounded-pill" style="background-color: #a8b8d0;"
-                                        data-bs-toggle="modal" data-bs-target="#modalDonate">
-                                        <i class="fas fa-donate"></i>
-                                        Donate
-                                    </button>
+                                    @if ($myChannel->coin >= 10)
+                                        <button class="btn rounded-pill" style="background-color: #a8b8d0;"
+                                            data-bs-toggle="modal" data-bs-target="#modalDonate">
+                                            <i class="fas fa-donate"></i>
+                                            Donate
+                                        </button>
+                                    @else
+                                        <button class="btn rounded-pill" style="background-color: #a8b8d0;"
+                                            data-bs-toggle="modal" data-bs-target="#modalFilterCoin">
+                                            <i class="fas fa-donate"></i>
+                                            Donate
+                                        </button>
+                                    @endif
                                 @endif
 
                                 <button class="btn rounded-pill" style="background-color: #a8b8d0;" data-bs-toggle="modal"
