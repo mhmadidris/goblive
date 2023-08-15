@@ -71,7 +71,6 @@ class VideoController extends Controller
      */
     public function show($url)
     {
-        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
         $video = Video::where('url', $url)->first();
 
         $channel = Channel::join('users', 'users.id', 'channels.user_id', 'channels.id')->join('videos', 'videos.channel_id', 'channels.id')->where('videos.url', $url)->first();
@@ -86,12 +85,15 @@ class VideoController extends Controller
         $qrCode = QrCode::size(150)->generate($url);
 
         if ($video) {
-            $video->refresh(); // Retrieve the latest data from the database
-            $video->increment('views');
+            if (Auth::user()) {
+                $myChannel = Channel::where('user_id', Auth::user()->id)->first();
+                $video->refresh(); // Retrieve the latest data from the database
+                $video->increment('views');
 
-            return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'qrCode', 'url', 'myChannel'));
-        } else {
-            // Handle the case when the video is not found
+                return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'qrCode', 'url', 'myChannel'));
+            } else {
+                return view('pages.front.detail-video', compact('video', 'otherVideo', 'channel', 'qrCode', 'url'));
+            }
             dd("not found");
         }
     }
