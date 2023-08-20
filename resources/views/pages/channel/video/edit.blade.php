@@ -29,12 +29,15 @@
                         </div> --}}
                     </div>
                     <div class="mb-3 d-flex justify-content-between gap-3">
-                        <img id="defaultImage" class="rounded shadow-sm" src="{{ asset('images/default-video.png') }}"
-                            style="width: 75%; height: 26.5rem; object-fit: cover; display: none;">
-                        <video id="videoPreview" src="{{ asset('storage/' . $video->video) }}" class="rounded" controls
-                            style="width: 75%; height: 26.5rem; object-fit: cover;"></video>
-
-                        <div class="card card-body" style="width: 25%; height: 26.5rem;">
+                        <div class="col-md-8">
+                            <img id="defaultImage" class="rounded shadow-sm" src="{{ asset('images/default-video.png') }}"
+                                style="width: 100%; height: 26.5rem; object-fit: cover; display: none;">
+                            <video id="videoPreview" src="{{ asset('storage/' . $video->video) }}" class="rounded" controls
+                                style="width: 100%; height: 26.5rem; object-fit: cover;"></video>
+                        </div>
+                        <input class="form-control d-md-none d-block" type="file" id="videoInput" name="video"
+                            accept="video/*" required>
+                        <div class="card card-body col-md-4">
                             <div class="mb-3 d-flex flex-column">
                                 <label for="imageInput" class="form-label fw-semibold">Select Thumbnail:</label>
                                 <img class="rounded shadow-sm mb-2" id="imagePreview"
@@ -74,7 +77,8 @@
                             </div>
                         </div>
                     </div>
-                    <input class="form-control" type="file" id="videoInput" name="video" accept="video/*">
+                    <input class="form-control d-md-block d-none" type="file" id="videoInput" name="video"
+                        accept="video/*">
                 </div>
 
                 <div class="card card-body text-black" style="background-color: #a8b8d0;">

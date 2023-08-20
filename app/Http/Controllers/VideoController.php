@@ -39,8 +39,9 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         $randomString = Str::random(16);
+        $user = Auth::user();
 
-        $myChannelId = Channel::where('user_id', Auth::user()->id)->value('id');
+        $myChannelId = Channel::where('user_id', $user->id)->value('id');
 
         $video = new Video();
         $video->channel_id = $myChannelId;
@@ -48,18 +49,20 @@ class VideoController extends Controller
         $video->url = $randomString;
         $video->duration = $request->input('duration');
         $video->format = $request->input('format');
-        $video->video = 'videos/' . $request->file('video')->hashName();
-        $video->thumbnail = 'thumbnails/' . $request->file('thumbnail')->hashName();
         $video->category = $request->input('category');
         $video->visibility = $request->input('visibility');
         $video->description = $request->input('description');
+
+        $videoFileName = 'videos/' . $request->file('video')->hashName();
+        $thumbnailFileName = 'thumbnails/' . $request->file('thumbnail')->hashName();
+
+        $video->video = $videoFileName;
+        $video->thumbnail = $thumbnailFileName;
         $video->save();
 
-        // Store the video file in the storage disk under the 'videos' directory
-        $request->file('video')->store('public/videos');
-
-        // Store the thumbnail file in the storage disk under the 'thumbnails' directory
-        $request->file('thumbnail')->store('public/thumbnails');
+        // Store the video and thumbnail files in the storage disk under their respective directories
+        $request->file('video')->storeAs('public', $videoFileName);
+        $request->file('thumbnail')->storeAs('public', $thumbnailFileName);
 
         Alert::toast('Add new video successfully!', 'success', ['icon' => 'success']);
 

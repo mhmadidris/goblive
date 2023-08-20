@@ -118,7 +118,6 @@ class ChannelController extends Controller
                 Rule::unique('channels')->ignore($channel->id),
             ],
             'bio' => 'nullable|string',
-            'lokasi' => 'nullable|string',
             'header' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -131,8 +130,8 @@ class ChannelController extends Controller
             $channel->bio = $validatedData['bio'];
         }
 
-        if ($validatedData['lokasi'] !== null) {
-            $channel->lokasi = $validatedData['lokasi'];
+        if ($request->has('lokasi')) {
+            $channel->lokasi = $request->input('lokasi');
         }
 
         // Handle the header file
