@@ -61,8 +61,8 @@ class VideoController extends Controller
         $video->save();
 
         // Store the video and thumbnail files in the storage disk under their respective directories
-        $request->file('video')->storeAs('public', $videoFileName);
-        $request->file('thumbnail')->storeAs('public', $thumbnailFileName);
+        $video->video = $request->file('video')->store('videos', 'public');
+        $video->thumbnail = $request->file('thumbnail')->store('thumbnails', 'public');
 
         Alert::toast('Add new video successfully!', 'success', ['icon' => 'success']);
 
@@ -137,8 +137,7 @@ class VideoController extends Controller
             }
 
             $videoFile = $request->file('video');
-            $videoPath = $videoFile->store('videos', 'public');
-            $video->video = $videoPath;
+            $video->video = $request->file('video')->store('videos', 'public');
         }
 
         // Check if a new thumbnail file is uploaded
@@ -150,7 +149,7 @@ class VideoController extends Controller
 
             $thumbnailFile = $request->file('thumbnail');
             $thumbnailPath = $thumbnailFile->store('thumbnails', 'public');
-            $video->thumbnail = $thumbnailPath;
+            $video->thumbnail = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $video->save();
