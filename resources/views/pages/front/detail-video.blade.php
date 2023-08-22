@@ -116,7 +116,11 @@
                 </div>
             </div>
 
-            @livewire('comment-section', ['video' => $video])
+            @if (Auth::user())
+                @livewire('comment-section', ['video' => $video])
+            @else
+                <h6 class="text-center">Please login first to leave a comment</h6>
+            @endif
         </div>
 
         {{-- @if (count($otherVideo) > 0)
