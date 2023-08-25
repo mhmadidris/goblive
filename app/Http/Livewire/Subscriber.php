@@ -3,9 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Subscription;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use RealRashid\SweetAlert\Facades\Alert;
+use Auth;
 
 class Subscriber extends Component
 {

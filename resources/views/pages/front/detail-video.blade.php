@@ -90,12 +90,12 @@
                                     <a href="{{ route('channel.show', $channel->username) }}" class="nav-link">
                                         <h6 class="fw-bold">{{ ucfirst($channel->name) }}</h6>
                                     </a>
-                                    <livewire:count-subscribers :channelId="$channel->id" />
+                                    <livewire:count-subscribers :channelId="$channel->channel_id" />
                                 </div>
                             </div>
                             @if (Auth::user())
                                 @if ($video->channel_id != $myChannel->id)
-                                    <livewire:subscriber :channelId="$channel->id" />
+                                    <livewire:subscriber :channelId="$channel->channel_id" />
                                 @endif
                             @endif
                         </div>
