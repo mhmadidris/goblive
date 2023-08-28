@@ -7,9 +7,9 @@ use App\Models\Coin;
 use App\Models\Paket;
 use App\Models\Video;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Monarobase\CountryList\CountryList;
 use RealRashid\SweetAlert\Facades\Alert;
+use Auth;
 
 class CoinController extends Controller
 {
@@ -32,15 +32,19 @@ class CoinController extends Controller
      */
     public function create(Request $request)
     {
-        $videoId = $request->query('v');
-        $channelId = $request->query('c');
+        if (Auth::user()) {
+            $videoId = $request->query('v');
+            $channelId = $request->query('c');
 
-        $myChannel = Channel::where('user_id', Auth::user()->id)->first();
+            $myChannel = Channel::where('user_id', Auth::user()->id)->get();
 
-        if ($channelId != $myChannel->id) {
-            return view('pages.front.send-coin', compact(['videoId', 'channelId', 'myChannel']));
+            if ($channelId != $myChannel->id) {
+                return view('pages.front.send-coin', compact(['videoId', 'channelId', 'myChannel']));
+            } else {
+                return abort(404);
+            }
         } else {
-            return abort(404);
+            return redirect()->route('login');
         }
     }
 
