@@ -65,7 +65,7 @@ class HomeController extends Controller
             ->join('users', 'users.id', 'channels.user_id')
             ->select('videos.*', 'users.name as channel_name', 'channels.*')
             ->where('videos.visibility', 'Public')
-            ->orderBy('videos.created_at', 'ASC')
+            ->orderBy('videos.created_at', 'DESC')
             ->take(6)
             ->get();
 
