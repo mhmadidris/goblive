@@ -36,7 +36,7 @@ class CoinController extends Controller
             $videoId = $request->query('v');
             $channelId = $request->query('c');
 
-            $myChannel = Channel::where('user_id', Auth::user()->id)->get();
+            $myChannel = Channel::where('user_id', Auth::user()->id)->first();
 
             if ($channelId != $myChannel->id) {
                 return view('pages.front.send-coin', compact(['videoId', 'channelId', 'myChannel']));
@@ -53,24 +53,25 @@ class CoinController extends Controller
      */
     public function store(Request $request)
     {
-        $video = Video::where('channel_id', $request->channelId)->first();
+        $video = Video::where('id', $request->channelId)->first();
 
         $fromChannel = Channel::where('user_id', Auth::user()->id)->first();
 
         $coins = Coin::create([
             'from_channel_id' => $fromChannel->id,
-            'to_channel_id' => $request->channelId,
+            'to_channel_id' => $video->channel_id,
             'video_id' => $request->videoId,
             'user_id' => Auth::user()->id,
             'coin' => $request->rangeCoins,
             'pesan' => $request->pesan ?? null
         ]);
 
+
         if ($coins) {
             $fromChannel->coin -= $request->rangeCoins;
             $fromChannel->save();
 
-            $destinationChannel = Channel::find($request->channelId);
+            $destinationChannel = Channel::find($video->channel_id);
             $destinationChannel->coin += $request->rangeCoins;
             $destinationChannel->save();
 
