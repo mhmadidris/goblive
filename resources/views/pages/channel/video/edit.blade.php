@@ -92,9 +92,11 @@
                         <select class="form-select" aria-label="Default select example" id="categoryVideo" name="category"
                             required>
                             <option value="" disabled>-- Choose Category --</option>
-                            <option value="Console" {{ $video->category === 'Console' ? 'selected' : '' }}>Console</option>
-                            <option value="PC" {{ $video->category === 'PC' ? 'selected' : '' }}>PC</option>
-                            <option value="Mobile" {{ $video->category === 'Mobile' ? 'selected' : '' }}>Mobile</option>
+                            <option value="Console" {{ $video->category === 'Console' ? 'selected' : '' }}>Console Game
+                            </option>
+                            <option value="PC" {{ $video->category === 'PC' ? 'selected' : '' }}>PC Game</option>
+                            <option value="Mobile" {{ $video->category === 'Mobile' ? 'selected' : '' }}>Mobile Game
+                            </option>
                         </select>
                     </div>
 

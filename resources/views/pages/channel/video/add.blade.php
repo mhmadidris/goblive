@@ -89,9 +89,9 @@
                         <select class="form-select" aria-label="Default select example" id="categoryVideo" name="category"
                             required>
                             <option value="" selected disabled>-- Choose Category --</option>
-                            <option value="Console">Console</option>
-                            <option value="PC">PC</option>
-                            <option value="Mobile">Mobile</option>
+                            <option value="Console">Console Game</option>
+                            <option value="PC">PC Game</option>
+                            <option value="Mobile">Mobile Game</option>
                         </select>
                     </div>
 

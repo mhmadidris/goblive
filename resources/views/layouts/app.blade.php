@@ -76,6 +76,27 @@
             outline: none;
             box-shadow: none;
         }
+
+        .card-input-element {
+            display: none;
+        }
+
+        .card-input {
+            margin: 10px;
+            padding: 0px;
+        }
+
+        label {
+            width: 100%;
+        }
+
+        .card-input:hover {
+            cursor: pointer;
+        }
+
+        .card-input-element:checked+.card-input {
+            box-shadow: 0 0 5px 5px #2ecc71;
+        }
     </style>
 
     <script>

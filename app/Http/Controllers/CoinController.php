@@ -62,17 +62,17 @@ class CoinController extends Controller
             'to_channel_id' => $video->channel_id,
             'video_id' => $request->videoId,
             'user_id' => Auth::user()->id,
-            'coin' => $request->rangeCoins,
+            'coin' => $request->pilihCoin,
             'pesan' => $request->pesan ?? null
         ]);
 
 
         if ($coins) {
-            $fromChannel->coin -= $request->rangeCoins;
+            $fromChannel->coin -= $request->pilihCoin;
             $fromChannel->save();
 
             $destinationChannel = Channel::find($video->channel_id);
-            $destinationChannel->coin += $request->rangeCoins;
+            $destinationChannel->coin += $request->pilihCoin;
             $destinationChannel->save();
 
             Alert::success('Send coin successfully!');

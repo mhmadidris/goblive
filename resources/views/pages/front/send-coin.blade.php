@@ -9,22 +9,171 @@
                     <input type="hidden" value="{{ $videoId }}" name="videoId">
                     <input type="hidden" value="{{ $channelId }}" name="channelId">
 
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <img src="{{ asset('images/send-coin.png') }}" alt="Send Coin"
                             style="object-fit: cover; width: 15rem;">
-                    </div>
+                    </div> --}}
 
                     <div class="d-flex flex-column align-items-center align-content-center justify-content-center">
-                        <h2 class="fw-bold" id="sliderValue">0</h2>
-                        <input type="range" class="form-control-range w-100" id="rangeCoin" max="{{ $myChannel->coin }}"
-                            step="1" value="0" name="rangeCoins">
+                        {{-- <h2 class="fw-bold" id="sliderValue">0</h2> --}}
+                        {{-- <input type="range" class="form-control-range w-100" id="rangeCoin" max="{{ $myChannel->coin }}"
+                            step="1" value="0" name="rangeCoins"> --}}
+
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="100" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/hamburger.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Hamburger</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    100</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="250" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/drink.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Juice</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    250</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="500" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/sandwich.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Sandwich</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    500</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="750" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/doll.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Sweety Doll</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    750</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="1000" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/motorbike.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Motorbike</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    1000</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="1250" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/coffee-cup.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Coffecup</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    1250</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="1500" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/ferrari.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Car</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    1500</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label>
+                                    <input type="radio" name="pilihCoin" class="card-input-element" value="2000" />
+                                    <div class="card card-default card-input">
+                                        <div
+                                            class="card-body d-flex flex-column gap-3 justify-content-center align-items-center">
+                                            <img src="{{ asset('images/send-coin/plane.png') }}" alt=""
+                                                width="50" height="50">
+                                            <h6 class="text-center fw-semibold">Plane</h6>
+                                            <div class="d-flex align-content-center align-items-center gap-2">
+                                                <i class="fas fa-coins" style="color: #FCD411;"></i>
+                                                <h5 class="fw-bold m-0" style="color: #FCD411;">
+                                                    2000</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
                         <h4 class="fw-bold my-2">My Coins: {{ number_format($myChannel->coin) }}</h4>
                     </div>
 
                     <div class="w-100">
-                        <label for="pesanTextarea" class="form-label h5 fw-medium">Message <small>(optional)</small></label>
-                        <textarea class="form-control" id="pesanTextarea" rows="6" name="pesan" placeholder="Type message for creator"
-                            style="resize: none;"></textarea>
+                        <label for="pesanTextarea" class="form-label h5 fw-medium">Message
+                            <small>(optional)</small></label>
+                        <textarea class="form-control" id="pesanTextarea" rows="6" name="pesan"
+                            placeholder="Type message for creator" style="resize: none;"></textarea>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2 w-100 mt-2">
