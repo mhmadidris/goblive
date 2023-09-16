@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('likes')->default(0);
             $table->unsignedBigInteger('dislikes')->default(0);
             $table->string('category');
+            $table->string('games_name')->nullable();
             $table->string('description');
             $table->enum('visibility', ['Public', 'Private']);
             $table->timestamps();

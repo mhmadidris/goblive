@@ -27,7 +27,8 @@ class MyVideo extends Component
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('title', 'LIKE', '%' . $this->search . '%');
+                $q->where('title', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('games_name', 'LIKE', '%' . $this->search . '%');
             });
         }
 

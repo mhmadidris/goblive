@@ -85,6 +85,24 @@
                     </div>
 
                     <div class="form-outline mb-3">
+                        <label class="form-label fw-semibold" for="listGame">Game</label>
+                        <select class="form-select select2" aria-label="Default select example" id="listGame"
+                            name="gameName" required>
+                            <option value="" selected disabled>-- Choose Game --</option>
+                            @php
+                                // Sort the $jsonData array by 'title' in ascending order
+                                usort($jsonData, function ($a, $b) {
+                                    return strcasecmp($a['title'], $b['title']);
+                                });
+                            @endphp
+
+                            @foreach ($jsonData as $game)
+                                <option value="{{ $game['title'] }}">{{ $game['title'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-outline mb-3">
                         <label class="form-label fw-semibold" for="categoryVideo">Category</label>
                         <select class="form-select" aria-label="Default select example" id="categoryVideo" name="category"
                             required>
@@ -214,6 +232,15 @@
                     }
                 };
             }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "-- Search Game --",
+                allowClear: true,
+            });
         });
     </script>
 @endsection

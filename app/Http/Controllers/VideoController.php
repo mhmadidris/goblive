@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\URL;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Http;
 
 class VideoController extends Controller
 {
@@ -30,7 +31,11 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('pages.channel.video.add');
+        $url = "https://www.freetogame.com/api/games";
+        $response = Http::get($url);
+        $decodedData = $response->json();
+
+        return view('pages.channel.video.add', ['jsonData' => $decodedData]);
     }
 
     /**
@@ -49,6 +54,7 @@ class VideoController extends Controller
         $video->url = $randomString;
         $video->duration = $request->input('duration');
         $video->format = $request->input('format');
+        $video->games_name = $request->input('gameName');
         $video->category = $request->input('category');
         $video->visibility = $request->input('visibility');
         $video->description = $request->input('description');

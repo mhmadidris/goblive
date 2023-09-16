@@ -39,15 +39,24 @@
                 <livewire:count-subscribers :channelId="$myChannel->id" />
             </div>
         </div>
-        <div class="d-flex flex-row gap-2">
+
+        <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-row gap-2">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#linkShop"
+                    class="btn d-flex flex-row align-items-center gap-2 bg-btn-color justify-content-center w-75">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="d-none d-md-block">Shop</span>
+                </button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#editProfile"
+                    class="btn bg-btn-color w-25">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
             <a href="{{ route('mychannel.video.create') }}"
-                class="btn d-flex flex-row align-items-center gap-2 bg-btn-color">
+                class="btn d-flex flex-row align-items-center gap-2 bg-btn-color justify-content-center">
                 <i class="fas fa-plus"></i>
                 <span class="d-none d-md-block">Upload new video</span>
             </a>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#editProfile" class="btn bg-btn-color">
-                <i class="fas fa-edit"></i>
-            </button>
         </div>
     </div>
 

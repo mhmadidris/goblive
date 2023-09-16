@@ -14,7 +14,7 @@
     @endif
 
     <div class="row">
-        @foreach ($videos as $item)
+        @forelse ($videos as $item)
             <div class="col-md-3 mb-4">
                 <div class="d-flex flex-column text-white">
                     <div class="position-relative">
@@ -51,7 +51,13 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div style="min-height: 150vh;" class="d-flex flex-column justify-content-center align-items-center gap-2"
+                style="opacity: 0.75;">
+                <img style="width: 10rem;" src="{{ asset('images/no-video.png') }}" alt="video not found">
+                <h4 class="fw-bold text-uppercase">Videos not yet available</h4>
+            </div>
+        @endforelse
 
         <div class="d-flex flex-row justify-content-end mt-2">
             {{ $videos->links('livewire.pagination') }}

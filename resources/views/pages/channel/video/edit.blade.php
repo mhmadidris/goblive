@@ -88,6 +88,24 @@
                     </div>
 
                     <div class="form-outline mb-3">
+                        <label class="form-label fw-semibold" for="listGame">Game</label>
+                        <select class="form-select select2" aria-label="Default select example" id="listGame"
+                            name="gameId" required>
+                            <option value="" selected disabled>-- Choose Game --</option>
+                            @php
+                                // Sort the $jsonData array by 'title' in ascending order
+                                usort($jsonData, function ($a, $b) {
+                                    return strcasecmp($a['title'], $b['title']);
+                                });
+                            @endphp
+
+                            @foreach ($jsonData as $game)
+                                <option value="{{ $game['title'] }}">{{ $game['title'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-outline mb-3">
                         <label class="form-label fw-semibold" for="categoryVideo">Category</label>
                         <select class="form-select" aria-label="Default select example" id="categoryVideo" name="category"
                             required>
@@ -102,7 +120,8 @@
 
                     <div class="form-outline">
                         <label for="descriptionVideo" class="form-label fw-semibold">Description</label>
-                        <textarea class="form-control" id="descriptionVideo" rows="6" style="resize: none;" name="description" required>{{ $video->description }}</textarea>
+                        <textarea class="form-control" id="descriptionVideo" rows="6" style="resize: none;" name="description"
+                            required>{{ $video->description }}</textarea>
                     </div>
                 </div>
 
@@ -219,6 +238,15 @@
                     }
                 };
             }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "-- Search Game --",
+                allowClear: true,
+            });
         });
     </script>
 @endsection
