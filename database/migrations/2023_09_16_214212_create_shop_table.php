@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shop', function (Blueprint $table) {
+        Schema::create('shops', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
+            $table->string('shoope_link')->nullable();
+            $table->string('tokopedia_link')->nullable();
+            $table->string('bukalapak_link')->nullable();
             $table->timestamps();
         });
     }

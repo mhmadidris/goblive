@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
+use App\Models\Shop;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -43,10 +44,13 @@ class ChannelController extends Controller
             ->take(6)
             ->get();
 
+        $linkShop = Shop::where('user_id', Auth::user()->id)->firstOrNew();
+
         return view('pages.channel.my-channel')->with('myChannel', $myChannel)
             ->with('latestUpload', $latestUpload)
             ->with('popularVideos', $popularVideos)
-            ->with('countries', $countries);
+            ->with('countries', $countries)
+            ->with('linkShop', $linkShop);
     }
 
     /**
@@ -90,7 +94,9 @@ class ChannelController extends Controller
             ->take(6)
             ->get();
 
-        return view('pages.front.channel.detail-channel', compact('channel', 'latestUpload', 'popularVideos'));
+        $linkShop = Shop::where('user_id', $channel->user_id)->firstOrNew();
+
+        return view('pages.front.channel.detail-channel', compact('channel', 'latestUpload', 'popularVideos', 'linkShop'));
     }
 
     /**
@@ -166,6 +172,17 @@ class ChannelController extends Controller
         // Save the updated user
         $user->save();
 
+        if ($request->input('shoopeLink') || $request->input('tokopediaLink') || $request->input('bukalapakLink')) {
+            Shop::updateOrInsert(
+                ['user_id' => $channel->user_id],
+                [
+                    'shoope_link' => $request->input('shoopeLink'),
+                    'tokopedia_link' => $request->input('tokopediaLink'),
+                    'bukalapak_link' => $request->input('bukalapakLink'),
+                ]
+            );
+        }
+
         Alert::toast('Update channel successfully!', 'success', ['icon' => 'success']);
 
         // Redirect or return a response
@@ -189,7 +206,9 @@ class ChannelController extends Controller
 
         $myChannel = Channel::where('user_id', Auth::user()->id)->first();
 
-        return view('pages.channel.my-video', compact('category', 'myChannel', 'countries'));
+        $linkShop = Shop::where('user_id', Auth::user()->id)->firstOrNew();
+
+        return view('pages.channel.my-video', compact('category', 'myChannel', 'countries', 'linkShop'));
     }
 
 
@@ -208,7 +227,9 @@ class ChannelController extends Controller
 
         $viewCount = $countViews->sum('views');
 
-        return view('pages.channel.my-about', compact('myChannel', 'viewCount', 'countries'));
+        $linkShop = Shop::where('user_id', Auth::user()->id)->firstOrNew();
+
+        return view('pages.channel.my-about', compact('myChannel', 'viewCount', 'countries', 'linkShop'));
     }
 
     public function channelVideos(Request $request, $username)

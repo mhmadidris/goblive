@@ -3,6 +3,36 @@
         <div class="position-relative">
             <img class="img-fluid w-100" src="{{ asset('images/header-bg.jpg') }}" alt="Thumbnail"
                 style="height: 35vh; object-fit: cover;">
+            @if ($linkShop != null)
+                <div class="position-absolute top-0 end-0 mx-4 my-2 d-flex flex-row gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex flex-row gap-2">
+                            @if ($linkShop->shoope_link != null)
+                                <a href="{{ $linkShop->shoope_link }}" target="__blank" class="shadow">
+                                    <img class="rounded-circle" style="object-fit: cover;"
+                                        src="{{ asset('images/shop/shoope.svg') }}" width="40" height="40"
+                                        alt="shop" title="Shoope">
+                                </a>
+                            @endif
+                            @if ($linkShop->tokopedia_link != null)
+                                <a href="{{ $linkShop->tokopedia_link }}" target="__blank" class="shadow">
+                                    <img class="rounded-circle" style="object-fit: cover;"
+                                        src="{{ asset('images/shop/tokopedia.svg') }}" width="40" height="40"
+                                        alt="shop" title="Tokopedia">
+                                </a>
+                            @endif
+                            @if ($linkShop->bukalapak_link != null)
+                                <a href="{{ $linkShop->bukalapak_link }}" target="__blank" class="shadow">
+                                    <img class="rounded-circle" style="object-fit: cover;"
+                                        src="{{ asset('images/shop/bukalapak.svg') }}" width="40" height="40"
+                                        alt="shop" title="Bukalapak">
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="position-absolute bottom-0 end-0 mx-4 my-2 d-flex flex-row gap-2">
                 <div class="p-2 btn-color rounded d-flex flex-row justify-content-center align-items-center align-content-center gap-2 shadow"
                     style="color: #FCD411;">
@@ -40,23 +70,15 @@
             </div>
         </div>
 
-        <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-row gap-2">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#linkShop"
-                    class="btn d-flex flex-row align-items-center gap-2 bg-btn-color justify-content-center w-75">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="d-none d-md-block">Shop</span>
-                </button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#editProfile"
-                    class="btn bg-btn-color w-25">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </div>
+        <div class="d-flex flex-row gap-2">
             <a href="{{ route('mychannel.video.create') }}"
                 class="btn d-flex flex-row align-items-center gap-2 bg-btn-color justify-content-center">
                 <i class="fas fa-plus"></i>
                 <span class="d-none d-md-block">Upload new video</span>
             </a>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#editProfile" class="btn bg-btn-color">
+                <i class="fas fa-edit"></i>
+            </button>
         </div>
     </div>
 

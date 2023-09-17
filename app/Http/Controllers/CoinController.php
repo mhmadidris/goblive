@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Channel;
 use App\Models\Coin;
 use App\Models\Paket;
+use App\Models\Shop;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Monarobase\CountryList\CountryList;
@@ -24,7 +25,9 @@ class CoinController extends Controller
         $countries = $countryList->getList();
         // $myVideo = Video::where('channel_id', $myChannel->id)->orderBy('created_at', 'DESC')->get();
 
-        return view('pages.channel.my-history')->with('myChannel', $myChannel)->with('countries', $countries);
+        $linkShop = Shop::where('user_id', Auth::user()->id)->firstOrNew();
+
+        return view('pages.channel.my-history')->with('myChannel', $myChannel)->with('countries', $countries)->with('linkShop', $linkShop);
     }
 
     /**

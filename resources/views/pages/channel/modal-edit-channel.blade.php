@@ -73,6 +73,38 @@
                         <textarea class="form-control" id="bioForm" rows="4" style="resize: none;" name="bio"
                             placeholder="ex: Professional games streamer...">{{ $myChannel->bio }}</textarea>
                     </div>
+
+                    <hr class="hr" />
+
+                    <h4 class="text-center fw-bold">Shop</h4>
+
+                    <div class="input-group my-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default1">
+                            <img src="{{ asset('images/shop/shoope.svg') }}" width="75" alt="">
+                        </span>
+                        <input type="url" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" placeholder="Enter a Shopee URL"
+                            name="shoopeLink" pattern="https?://.*" autocomplete="off"
+                            value="{{ $linkShop->shoope_link }}">
+                    </div>
+                    <div class="input-group my-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default2">
+                            <img src="{{ asset('images/shop/tokopedia.svg') }}" width="75" alt="">
+                        </span>
+                        <input type="url" class="form-control" aria-label="Sizing example input"
+                            name="tokopediaLink" aria-describedby="inputGroup-sizing-default"
+                            placeholder="Enter a Tokopedia URL" pattern="https?://.*" autocomplete="off"
+                            value="{{ $linkShop->tokopedia_link }}">
+                    </div>
+                    <div class="input-group my-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default3">
+                            <img src="{{ asset('images/shop/bukalapak.svg') }}" width="75" alt="">
+                        </span>
+                        <input type="url" class="form-control" aria-label="Sizing example input"
+                            name="bukalapakLink" aria-describedby="inputGroup-sizing-default"
+                            placeholder="Enter a Bukalapak URL" pattern="https?://.*" autocomplete="off"
+                            value="{{ $linkShop->bukalapak_link }}">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
