@@ -48,7 +48,6 @@
                 Welcome to GOBLIVE
             </h1>
             <h5 class="m-0 fw-bold">Join our community and share your passion with the world</h5>
-            <button class="btn mt-3 fw-bold text-white" style="border: 1.5px solid white">Get Started</button>
         </div>
     </div>
 
